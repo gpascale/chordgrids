@@ -124,7 +124,7 @@
                     var dot = makeSVG('circle', {
                         cx: c[0],
                         cy: c[1],
-                        r: 17.5,
+                        r: fretSpacing / 3,
                         fill: 'rgb(0, 0, 0)'
                     });
                     this.dataSVG[fret][string] = dot;
@@ -132,21 +132,22 @@
                     break;
                 }
                 case 2: {
+                    var r = fretSpacing * (15 / 60);
                     var l1 = makeSVG('line', {
-                        x1: c[0] - 15,
-                        x2: c[0] + 15,
-                        y1: c[1] - 15,
-                        y2: c[1] + 15,
+                        x1: c[0] - r,
+                        x2: c[0] + r,
+                        y1: c[1] - r,
+                        y2: c[1] + r,
                         stroke: 'rgb(0, 0, 0)',
-                        'stroke-width': 5
+                        'stroke-width': fretSpacing / 12
                     });
                     var l2 = makeSVG('line', {
-                        x1: c[0] - 15,
-                        x2: c[0] + 15,
-                        y1: c[1] + 15,
-                        y2: c[1] - 15,
+                        x1: c[0] - r,
+                        x2: c[0] + r,
+                        y1: c[1] + r,
+                        y2: c[1] - r,
                         stroke: 'rgb(0, 0, 0)',
-                        'stroke-width': 5
+                        'stroke-width': fretSpacing / 12
                     });
                     var x = makeSVG('g');
                     x.appendChild(l1);
@@ -157,10 +158,10 @@
                 }
                 case 3: {
                     var dot = makeSVG('rect', {
-                        width: 35,
-                        height: 35,
-                        x: c[0] - 17.5,
-                        y: c[1] - 17.5,
+                        width: fretSpacing * .6,
+                        height: fretSpacing * .6,
+                        x: c[0] - fretSpacing / 3,
+                        y: c[1] - fretSpacing / 3,
                         fill: 'transparent',
                         stroke: 'rgb(0, 0, 0)',
                         'stroke-width': 5
@@ -170,7 +171,15 @@
                     break;
                 }
                 case 4: {
-                    // triangle
+                    var points = [ c[0] - 15, c[1] + 15, c[0], c[1] - 15, c[0] + 15, c[1] + 15, c[0] - 15, c[1] + 15 ].toString();
+                    var tri = makeSVG('polyline', {
+                        points: points,
+                        fill: 'none',
+                        stroke: 'rgb(0, 0, 0)',
+                        'stroke-width': 5
+                    });
+                    this.dataSVG[fret][string] = tri;
+                    this.$svg.appendChild(tri);
                     break;
                 }
             }
