@@ -8,43 +8,20 @@
         return el;
     };
 
-    var padding = 40;
-    var fretWidth = 10;
-    var fretSpacing = 60;
-    var stringWidth = 5;
-    var stringSpacing = 50;
+/*
+    var this.padding = 40;
+    var this.fretWidth = 10;
+    var this.fretSpacing = 60;
+    var this.stringWidth = 5;
+    var this.stringSpacing = 50;
 
     var width = 2 * padding + 6 * stringWidth + 5 * stringSpacing;
-    var height = 2 * padding + 6 * fretWidth + 5 * fretSpacing;
+    var height = 2 * padding + 6 * this.fretWidth + 5 * fretSpacing;
 
-    function coords(fret, string) {
-        return [ padding + 0.5 * stringWidth + string * (stringSpacing + stringWidth),
-                 padding + 0.5 * fretWidth + fret * (fretSpacing + fretWidth) - 0.5 * fretSpacing - 0.5 * fretWidth ];
+    
+    */
 
-    }
-
-    function nearest(x, y) {
-        var nearestFret = -1;
-        var nearestFretDist = 100000;
-        for (var i = 0; i < 5; ++i) {
-            var dist = Math.abs(y - (coords(i, 0)[1]));
-            if (dist < nearestFretDist) {
-                nearestFretDist = dist;
-                nearestFret = i;
-            }
-        }
-        var nearestString = -1;
-        var nearestStringDist = 100000;
-        for (var i = 0; i < 6; ++i) {
-            var dist = Math.abs(x - (coords(0, i)[0]));
-            if (dist < nearestStringDist) {
-                nearestStringDist = dist;
-                nearestString = i;
-            }
-        }
-
-        return [ nearestFret, nearestString ];
-    }
+    
 
     app.ChordGridView = Marionette.ItemView.extend({
         template: '#ChordGridTemplate',
@@ -52,34 +29,62 @@
         events: {
             'click': 'onClickFoo'
         },
+        model: app.ChordGrid,
 
-        initialize: function() {
-            this.data = [
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0]
-            ];
+        initialize: function(params) {
+            this.width = params.width || 300;
+            this.height = params.height || 400;
+            this.padding = this.width * 0.1;
+            this.fretWidth = this.width * 0.03;
+            this.stringWidth = this.width * 0.015;
+            this.stringSpacing = 0.2 * (this.width - 2 * this.padding - 6 * this.stringWidth);
+            this.fretSpacing = 0.2 * (this.height - 2 * this.padding - 6 * this.fretWidth);
             this.dataSVG = [ [], [], [], [], [], [] ];
+        },
+
+        _coords: function(fret, string) {
+            return [ this.padding + 0.5 * this.stringWidth + string * (this.stringSpacing + this.stringWidth),
+                     this.padding + 0.5 * this.fretWidth + fret * (this.fretSpacing + this.fretWidth) - 0.5 * this.fretSpacing - 0.5 * this.fretWidth ];
+        },
+
+        _nearest: function(x, y) {
+            var nearestFret = -1;
+            var nearestFretDist = 100000;
+            for (var i = 0; i < 5; ++i) {
+                var dist = Math.abs(y - (this._coords(i, 0)[1]));
+                if (dist < nearestFretDist) {
+                    nearestFretDist = dist;
+                    nearestFret = i;
+                }
+            }
+            var nearestString = -1;
+            var nearestStringDist = 100000;
+            for (var i = 0; i < 6; ++i) {
+                var dist = Math.abs(x - (this._coords(0, i)[0]));
+                if (dist < nearestStringDist) {
+                    nearestStringDist = dist;
+                    nearestString = i;
+                }
+            }
+
+            return [ nearestFret, nearestString ];
         },
 
         onRender: function() {
             console.log("ChordGridView render!");
 
             this.$svg = $('<svg xmlns="http://www.w3.org/2000/svg" version="1.1"' +
-                'width="' + width + '" height="' + height + '"></svg>').get(0);
+                'width="' + this.width + '" height="' + this.height + '"></svg>').get(0);
 
             // Frets
             for (var i = 0; i < 6; ++i) {
                 var fret = makeSVG('line', {
-                    x1: padding,
-                    x2: width - padding,
-                    y1: padding + 0.5 * fretWidth + i * (fretSpacing + fretWidth),
-                    y2: padding + 0.5 * fretWidth + i * (fretSpacing + fretWidth),
+                    x1: this.padding,
+                    x2: this.width - this.padding,
+                    y1: this.padding + 0.5 * this.fretWidth + i * (this.fretSpacing + this.fretWidth),
+                    y2: this.padding + 0.5 * this.fretWidth + i * (this.fretSpacing + this.fretWidth),
                     stroke: 'rgb(0, 0, 0)',
-                    'stroke-width': fretWidth
+                    'stroke-width': this.fretWidth
                 });
                 this.$svg.appendChild(fret);
             }
@@ -87,24 +92,24 @@
             // Strings
             for (var i = 0; i < 6; ++i) {
                 var string = makeSVG('line', {
-                    y1: padding,
-                    y2: height - padding,
-                    x1: padding + i * (stringSpacing + stringWidth) + 0.5 * stringWidth,
-                    x2: padding + i * (stringSpacing + stringWidth) + 0.5 * stringWidth,
+                    y1: this.padding,
+                    y2: this.height - this.padding,
+                    x1: this.padding + i * (this.stringSpacing + this.stringWidth) + 0.5 * this.stringWidth,
+                    x2: this.padding + i * (this.stringSpacing + this.stringWidth) + 0.5 * this.stringWidth,
                     stroke: 'rgb(0, 0, 0)',
-                    'stroke-width': stringWidth
+                    'stroke-width': this.stringWidth
                 });
                 this.$svg.appendChild(string);
             }
 
             this.$el.append(this.$svg);
 
-            this.$el.width(width);
-            this.$el.height(height);
+            this.$el.width(this.width);
+            this.$el.height(this.height);
         },
 
         onClickFoo: function(e) {
-            var n = nearest(e.offsetX, e.offsetY);
+            var n = this._nearest(e.offsetX, e.offsetY);
             var fret = n[0];
             var string = n[1];
             if (this.data[fret][string]) {
@@ -116,7 +121,7 @@
 
             this.data[fret][string] = (this.data[fret][string] + 1 + 5) % 5;
 
-            var c = coords(fret, string);
+            var c = _coords(fret, string);
             switch(this.data[fret][string]) {
                 case 0: default:
                     break;
@@ -124,7 +129,7 @@
                     var dot = makeSVG('circle', {
                         cx: c[0],
                         cy: c[1],
-                        r: fretSpacing / 3,
+                        r: this.fretSpacing / 3,
                         fill: 'rgb(0, 0, 0)'
                     });
                     this.dataSVG[fret][string] = dot;
@@ -132,14 +137,14 @@
                     break;
                 }
                 case 2: {
-                    var r = fretSpacing * (15 / 60);
+                    var r = this.fretSpacing * (15 / 60);
                     var l1 = makeSVG('line', {
                         x1: c[0] - r,
                         x2: c[0] + r,
                         y1: c[1] - r,
                         y2: c[1] + r,
                         stroke: 'rgb(0, 0, 0)',
-                        'stroke-width': fretSpacing / 12
+                        'stroke-width': this.fretSpacing / 12
                     });
                     var l2 = makeSVG('line', {
                         x1: c[0] - r,
@@ -147,7 +152,7 @@
                         y1: c[1] + r,
                         y2: c[1] - r,
                         stroke: 'rgb(0, 0, 0)',
-                        'stroke-width': fretSpacing / 12
+                        'stroke-width': this.fretSpacing / 12
                     });
                     var x = makeSVG('g');
                     x.appendChild(l1);
@@ -158,10 +163,10 @@
                 }
                 case 3: {
                     var dot = makeSVG('rect', {
-                        width: fretSpacing * .6,
-                        height: fretSpacing * .6,
-                        x: c[0] - fretSpacing / 3,
-                        y: c[1] - fretSpacing / 3,
+                        width: this.fretSpacing * .6,
+                        height: this.fretSpacing * .6,
+                        x: c[0] - this.fretSpacing / 3,
+                        y: c[1] - this.fretSpacing / 3,
                         fill: 'transparent',
                         stroke: 'rgb(0, 0, 0)',
                         'stroke-width': 5
