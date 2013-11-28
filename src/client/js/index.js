@@ -2,27 +2,25 @@
 	var app = window.ChordGrids = (window.ChordGrids || {});
 
 	$(document).ready(function() {
+		
 		var col = new Backbone.Collection();
-
-		var gridCollectionView = new app.ChordGridCollectionView({ collection: col });
+		var gridCollectionView = new app.ChordGridCollectionView({ collection: col }).render();
 		for (var i = 0; i < 30; ++i)
 			col.add(new app.ChordGrid());
-
-		//var gridView = new app.ChordGridView().render();
-		$('body').append(gridCollectionView.$el);
 		
-			/*
-		var nut = makeSVG('line', {
-			x1: 10,
-			y1: 0,
-			x2: 10,
-			y2: 200,
-			stroke: 'rgb(0, 0, 0)',
-			'stroke-width': 20
+		var controlsView = new app.ControlsView().render();
+		controlsView.on('zoom', function(delta) {
+			gridCollectionView.doZoom(delta);
 		});
-		svg.appendChild(nut);
-		*/
 
-		
+		$('#content').append(gridCollectionView.$el);
+		$('#content').append(controlsView.$el);
+
+		$('body').on('mousewheel', function(e) {
+			if (e.metaKey) {
+				var delta = 1.0 - e.originalEvent.deltaY / 100;
+				gridCollectionView.doZoom(delta);
+			}
+		});
 	});
 })();

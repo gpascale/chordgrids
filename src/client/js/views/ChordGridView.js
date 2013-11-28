@@ -1,13 +1,6 @@
 (function() {
     var app = window.ChordGrids = (window.ChordGrids || {});
 
-    var makeSVG = function(tag, attrs) {
-        var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
-        for (var k in attrs)
-            el.setAttribute(k, attrs[k]);
-        return el;
-    };
-
 /*
     var this.padding = 40;
     var this.fretWidth = 10;
@@ -26,6 +19,7 @@
     app.ChordGridView = Marionette.ItemView.extend({
         template: '#ChordGridTemplate',
         className: 'chordGridView',
+        tagName: 'g',
         events: {
             'click': 'onClickFoo'
         },
@@ -39,6 +33,7 @@
             this.stringWidth = this.width * 0.015;
             this.stringSpacing = 0.2 * (this.width - 2 * this.padding - 6 * this.stringWidth);
             this.fretSpacing = 0.2 * (this.height - 2 * this.padding - 6 * this.fretWidth);
+            this.symbolR = 0.05 * this.width;
             this.dataSVG = [ [], [], [], [], [], [] ];
         },
 
@@ -73,12 +68,9 @@
         onRender: function() {
             console.log("ChordGridView render!");
 
-            this.$svg = $('<svg xmlns="http://www.w3.org/2000/svg" version="1.1"' +
-                'width="' + this.width + '" height="' + this.height + '"></svg>').get(0);
-
             // Frets
             for (var i = 0; i < 6; ++i) {
-                var fret = makeSVG('line', {
+                var fret = app.common.makeSVG('line', {
                     x1: this.padding,
                     x2: this.width - this.padding,
                     y1: this.padding + 0.5 * this.fretWidth + i * (this.fretSpacing + this.fretWidth),
@@ -86,12 +78,12 @@
                     stroke: 'rgb(0, 0, 0)',
                     'stroke-width': this.fretWidth
                 });
-                this.$svg.appendChild(fret);
+                this.el.appendChild(fret);
             }
 
             // Strings
             for (var i = 0; i < 6; ++i) {
-                var string = makeSVG('line', {
+                var string = app.common.makeSVG('line', {
                     y1: this.padding,
                     y2: this.height - this.padding,
                     x1: this.padding + i * (this.stringSpacing + this.stringWidth) + 0.5 * this.stringWidth,
@@ -99,95 +91,113 @@
                     stroke: 'rgb(0, 0, 0)',
                     'stroke-width': this.stringWidth
                 });
-                this.$svg.appendChild(string);
+                this.el.appendChild(string);
             }
 
-            this.$el.append(this.$svg);
+            for (var fret = 0; fret < 6; ++fret) {
+                for (var string = 0; string < 6; ++string) {
+
+                }
+            }
 
             this.$el.width(this.width);
             this.$el.height(this.height);
         },
 
-        onClickFoo: function(e) {
-            var n = this._nearest(e.offsetX, e.offsetY);
-            var fret = n[0];
-            var string = n[1];
-            if (this.data[fret][string]) {
-                if (this.dataSVG[fret][string]) {
-                    this.$svg.removeChild(this.dataSVG[fret][string]);
-                    this.dataSVG[fret][string] = null;
-                }
-            }
-
-            this.data[fret][string] = (this.data[fret][string] + 1 + 5) % 5;
-
-            var c = _coords(fret, string);
-            switch(this.data[fret][string]) {
-                case 0: default:
-                    break;
+        _symbol: function(type, c) {
+            switch (type) {
+                case app.Symbol.None: default:
+                    return null;
                 case 1: {
-                    var dot = makeSVG('circle', {
+                    var dot = app.common.makeSVG('circle', {
                         cx: c[0],
                         cy: c[1],
                         r: this.fretSpacing / 3,
                         fill: 'rgb(0, 0, 0)'
                     });
+                    return dot;
                     this.dataSVG[fret][string] = dot;
                     this.$svg.appendChild(dot);
                     break;
                 }
                 case 2: {
                     var r = this.fretSpacing * (15 / 60);
-                    var l1 = makeSVG('line', {
-                        x1: c[0] - r,
-                        x2: c[0] + r,
-                        y1: c[1] - r,
-                        y2: c[1] + r,
+                    var l1 = app.common.makeSVG('line', {
+                        x1: c[0] - this.symbolR,
+                        x2: c[0] + this.symbolR,
+                        y1: c[1] - this.symbolR,
+                        y2: c[1] + this.symbolR,
                         stroke: 'rgb(0, 0, 0)',
                         'stroke-width': this.fretSpacing / 12
                     });
-                    var l2 = makeSVG('line', {
-                        x1: c[0] - r,
-                        x2: c[0] + r,
-                        y1: c[1] + r,
-                        y2: c[1] - r,
+                    var l2 = app.common.makeSVG('line', {
+                        x1: c[0] - this.symbolR,
+                        x2: c[0] + this.symbolR,
+                        y1: c[1] + this.symbolR,
+                        y2: c[1] - this.symbolR,
                         stroke: 'rgb(0, 0, 0)',
                         'stroke-width': this.fretSpacing / 12
                     });
-                    var x = makeSVG('g');
+                    var x = app.common.makeSVG('g');
                     x.appendChild(l1);
                     x.appendChild(l2);
+                    return x;
                     this.dataSVG[fret][string] = x;
-                    this.$svg.appendChild(x);
+                    this.el.appendChild(x);
                     break;
                 }
                 case 3: {
-                    var dot = makeSVG('rect', {
-                        width: this.fretSpacing * .6,
-                        height: this.fretSpacing * .6,
-                        x: c[0] - this.fretSpacing / 3,
-                        y: c[1] - this.fretSpacing / 3,
+                    var rect = app.common.makeSVG('rect', {
+                        width: 2 * this.symbolR,
+                        height: 2 * this.symbolR,
+                        x: c[0] - this.symbolR,
+                        y: c[1] - this.symbolR,
                         fill: 'transparent',
                         stroke: 'rgb(0, 0, 0)',
                         'stroke-width': 5
                     });
+                    return rect;
                     this.dataSVG[fret][string] = dot;
-                    this.$svg.appendChild(dot);
+                    this.el.appendChild(dot);
                     break;
                 }
                 case 4: {
-                    var points = [ c[0] - 15, c[1] + 15, c[0], c[1] - 15, c[0] + 15, c[1] + 15, c[0] - 15, c[1] + 15 ].toString();
-                    var tri = makeSVG('polyline', {
+                    var points = [ c[0] - this.symbolR, c[1] + this.symbolR,
+                                   c[0], c[1] - this.symbolR,
+                                   c[0] + this.symbolR, c[1] + this.symbolR,
+                                   c[0] - this.symbolR, c[1] + this.symbolR ].toString();
+                    var tri = app.common.makeSVG('polyline', {
                         points: points,
                         fill: 'none',
                         stroke: 'rgb(0, 0, 0)',
                         'stroke-width': 5
                     });
-                    this.dataSVG[fret][string] = tri;
-                    this.$svg.appendChild(tri);
+                    return tri;
+                    
                     break;
                 }
             }
+        },
+
+        onClickFoo: function(e) {
+            var n = this._nearest(e.offsetX, e.offsetY);
+            var fret = n[0];
+            var string = n[1];
+            if (this.model.get('data')[fret][string]) {
+                if (this.dataSVG[fret][string]) {
+                    this.$svg.removeChild(this.dataSVG[fret][string]);
+                    this.dataSVG[fret][string] = null;
+                }
+            }
+
+            var data = this.model.get('data');
+            data[fret][string] = (data[fret][string] + 1 + 5) % 5;
+            this.model.set('data', data);
+
+            var c = this._coords(fret, string);
+            var symbol = this._symbol(data[fret][string], c);
+            this.dataSVG[fret][string] = symbol;
+            this.el.appendChild(symbol);
         }
     });
 })();

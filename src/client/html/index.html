@@ -1,7 +1,10 @@
 <html>
+
 	<head>
 
-    <script type="text/template" id="fretboardTemplate">
+    <script type="text/template" id="ControlsViewTemplate">
+        <button class="btn btn-large zoomIn">+</button>
+        <button class="btn btn-large zoomOut">-</button>
     </script>
 
     <!-- css -->
@@ -20,9 +23,11 @@
     <script src="ext/js/backbone.js"></script>
     <script src="ext/js/backbone.marionette.min.js"></script>
 
+    <script src="js/common.js"></script>
     <script src="js/models/ChordGrid.js"></script>
     <script src="js/views/ChordGridView.js"></script>
     <script src="js/views/ChordGridCollectionView.js"></script>
+    <script src="js/views/ControlsView.js"></script>
     <script src="js/index.js"></script>
 
 	</head>
@@ -36,9 +41,6 @@
       </div>
     </div>
     <div id="content">
-        <div id="headerContainer"></div>
-        <div id="fretboardContainer"></div>
-        <div id="footerContainer"></div>
     </div>
 	</body>
 </html>

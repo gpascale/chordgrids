@@ -10,15 +10,16 @@
     }
 
     app.ChordGrid = Backbone.Model.extend({
-        initialize: function() {
-            this.data = [
+        defaults: {
+            data: [
                 [0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0]
-            ];
+            ]
         }
+
     });
 }());

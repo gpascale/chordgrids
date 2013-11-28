@@ -93,19 +93,23 @@ module.exports = function(grunt) {
     grunt.config('watch', {
  		less: {
  	        files: [path.join(lessRoot, lessPattern)],
-            tasks: ['less']
+            tasks: ['less'],
+            options: { atBegin: true }
  		},
  		js: {
  			files: [path.join(jsRoot, jsPattern)],
- 			tasks: ['copy:js']
+ 			tasks: ['copy:js'],
+            options: { atBegin: true }
  		},
  		html: {
  			files: [path.join(htmlRoot, htmlPattern)],
  			tasks: ['copy:html'],
+            options: { atBegin: true }
  		},
         ext: {
             files: [path.join('src/client/ext/**/*.*')],
-            tasks: ['copy:ext']
+            tasks: ['copy:ext'],
+            options: { atBegin: true }
         },
         app: {
             files: 'app.js',
