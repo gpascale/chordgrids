@@ -35,6 +35,14 @@
             this.fretSpacing = 0.2 * (this.height - 2 * this.padding - 6 * this.fretWidth);
             this.symbolR = 0.05 * this.width;
             this.dataSVG = [ [], [], [], [], [], [] ];
+            this.x = 0;
+            this.y = 0;
+        },
+
+        setPosition: function(x, y) {
+            this.x = x;
+            this.y = y;
+            this.$el.attr('transform', 'translate(' + x + ',' + y + ')');
         },
 
         _coords: function(fret, string) {
@@ -45,7 +53,7 @@
         _nearest: function(x, y) {
             var nearestFret = -1;
             var nearestFretDist = 100000;
-            for (var i = 0; i < 5; ++i) {
+            for (var i = 0; i < 6; ++i) {
                 var dist = Math.abs(y - (this._coords(i, 0)[1]));
                 if (dist < nearestFretDist) {
                     nearestFretDist = dist;
@@ -67,6 +75,16 @@
 
         onRender: function() {
             console.log("ChordGridView render!");
+
+            // Background
+            var background = app.common.makeSVG('rect', {
+                x: 0,
+                y: 0,
+                width: this.width,
+                height: this.height,
+                fill: "rgb(255,255,255)"
+            });
+            this.el.appendChild(background);
 
             // Frets
             for (var i = 0; i < 6; ++i) {
@@ -116,9 +134,6 @@
                         fill: 'rgb(0, 0, 0)'
                     });
                     return dot;
-                    this.dataSVG[fret][string] = dot;
-                    this.$svg.appendChild(dot);
-                    break;
                 }
                 case 2: {
                     var r = this.fretSpacing * (15 / 60);
@@ -142,9 +157,6 @@
                     x.appendChild(l1);
                     x.appendChild(l2);
                     return x;
-                    this.dataSVG[fret][string] = x;
-                    this.el.appendChild(x);
-                    break;
                 }
                 case 3: {
                     var rect = app.common.makeSVG('rect', {
@@ -154,12 +166,9 @@
                         y: c[1] - this.symbolR,
                         fill: 'transparent',
                         stroke: 'rgb(0, 0, 0)',
-                        'stroke-width': 5
+                        'stroke-width': this.fretSpacing / 12
                     });
                     return rect;
-                    this.dataSVG[fret][string] = dot;
-                    this.el.appendChild(dot);
-                    break;
                 }
                 case 4: {
                     var points = [ c[0] - this.symbolR, c[1] + this.symbolR,
@@ -170,22 +179,27 @@
                         points: points,
                         fill: 'none',
                         stroke: 'rgb(0, 0, 0)',
-                        'stroke-width': 5
+                        'stroke-width': this.fretSpacing / 12
                     });
                     return tri;
-                    
-                    break;
                 }
             }
         },
 
         onClickFoo: function(e) {
-            var n = this._nearest(e.offsetX, e.offsetY);
+            // hacky - make better
+            var scale = $('.chordGridCollectionView').width() / 900;
+
+            var normalizedX = (e.offsetX - window.scrollX) / scale - (this.x - (window.scrollX / scale));
+            var normalizedY = (e.offsetY - window.scrollY) / scale - (this.y - (window.scrollY / scale));
+            console.log(normalizedX + ", " + normalizedY);
+
+            var n = this._nearest(normalizedX, normalizedY);
             var fret = n[0];
             var string = n[1];
             if (this.model.get('data')[fret][string]) {
                 if (this.dataSVG[fret][string]) {
-                    this.$svg.removeChild(this.dataSVG[fret][string]);
+                    this.el.removeChild(this.dataSVG[fret][string]);
                     this.dataSVG[fret][string] = null;
                 }
             }
@@ -195,9 +209,10 @@
             this.model.set('data', data);
 
             var c = this._coords(fret, string);
-            var symbol = this._symbol(data[fret][string], c);
+            var symbol = this._symbol(data[fret][string], c);            
             this.dataSVG[fret][string] = symbol;
-            this.el.appendChild(symbol);
+            if (symbol)
+                this.el.appendChild(symbol);
         }
     });
 })();

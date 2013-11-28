@@ -5,7 +5,7 @@
 		
 		var col = new Backbone.Collection();
 		var gridCollectionView = new app.ChordGridCollectionView({ collection: col }).render();
-		for (var i = 0; i < 30; ++i)
+		for (var i = 0; i < 60; ++i)
 			col.add(new app.ChordGrid());
 		
 		var controlsView = new app.ControlsView().render();

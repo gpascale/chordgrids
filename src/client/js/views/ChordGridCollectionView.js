@@ -4,7 +4,7 @@
     app.ChordGridCollectionView = Marionette.CollectionView.extend({
         itemView: app.ChordGridView,
         tagName: 'div',
-        className: 'chordGridCollection',
+        className: 'chordGridCollectionView',
         _zoom: 1,
         _timeout: null,
 
@@ -44,7 +44,7 @@
         appendHtml: function(collectionView, itemView, index) {
             var xOffset = index % 7 * 130;
             var yOffset = Math.floor(index / 7) * 160;
-            itemView.$el.attr('transform', 'translate(' + xOffset + ',' + yOffset + ')');
+            itemView.setPosition(xOffset, yOffset);
             this._svgRoot.appendChild(itemView.el);
         },
 
