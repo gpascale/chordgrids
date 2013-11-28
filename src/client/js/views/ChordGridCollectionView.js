@@ -48,12 +48,23 @@
             this._svgRoot.appendChild(itemView.el);
         },
 
-        doZoom: function(delta) {
+        doZoom: function(delta, focalPoint) {
+            if (!focalPoint)
+                focalPoint = { x: 450, y: 550 };
+
             this._zoom = Math.max(0.25, Math.min(4, this._zoom * delta));
             $(this._svgRoot).css('-webkit-transform', 'scale(' + this._zoom + ', ' + this._zoom + ')');
+
+            var focusX = window.scrollX + focalPoint.x;
+            var focusY = window.scrollY + focalPoint.y;
+            var newFocusX = focusX * delta;
+            var newFocusY = focusY * delta;
+            var newScrollX = newFocusX - focalPoint.x;
+            var newScrollY = newFocusY - focalPoint.y;
+
             this.$el.width(this._zoom * 900);
             this.$el.height(this._zoom * 1100);
-            console.log(window.scrollX);
+            window.scrollTo(newScrollX, newScrollY);
             return false;
         },
 

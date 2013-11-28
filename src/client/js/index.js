@@ -19,7 +19,8 @@
 		$('body').on('mousewheel', function(e) {
 			if (e.metaKey) {
 				var delta = 1.0 - e.originalEvent.deltaY / 100;
-				gridCollectionView.doZoom(delta);
+				var focalPoint = { x: e.clientX, y: e.clientY };
+				gridCollectionView.doZoom(delta, focalPoint);
 			}
 		});
 	});
