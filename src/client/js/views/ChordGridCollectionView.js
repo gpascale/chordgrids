@@ -31,13 +31,6 @@
                 el: el
             }, options);
             var view = new ItemViewType(options);
-            var self = this;
-            $('body').on('mousewheel', function(e) {
-                self._mousewheeled(e);
-            })
-            var textNode = app.common.makeSVG('text', { x: 50, y: 50 });
-            $(textNode).text("weeeee");
-            el.appendChild(textNode);
             return view;
         },
 
@@ -66,22 +59,6 @@
             this.$el.height(this._zoom * 1500);
             window.scrollTo(newScrollX, newScrollY);
             return false;
-        },
-
-        _mousewheeled: function(e, delta) {
-/*
-                if (this._timeout)
-                    clearTimeout(this._timeout);
-                var self = this;
-                this._timeout = setTimeout(function() {
-                    var width = self._zoom * self.$el.parent().parent().width();
-                    var height = self._zoom * self.$el.parent().parent().height();
-                    //console.log("screen coords = (" + e.screenX + ", " + e.screenY + ")");
-                    self.$el.parent().width(self._zoom * self.$el.parent().parent().width());
-                    self.$el.parent().height(self._zoom * self.$el.parent().parent().height());
-                    window.scrollTo(e.screenX / $(window).width() * width, e.screenY / $(window).height() * height);
-                }, 200);
-*/
         },
     });
 }());

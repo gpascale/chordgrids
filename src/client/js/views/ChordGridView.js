@@ -117,6 +117,13 @@
             $(name).append(div);
             this.el.appendChild(name);
 
+            var data = this.model.get('data');
+            for (var fret = 0; fret < 6; ++fret) {
+                for (var string = 0; string < 6; ++string) {
+                    this.setSymbol(fret, string, data[fret][string]);
+                }
+            }
+
             this.$el.width(this.width);
             this.$el.height(this.height);
         },
@@ -185,6 +192,18 @@
             }
         },
 
+        setSymbol: function(fret, string, symbol) {
+            var data = this.model.get('data');
+            data[fret][string] = symbol;
+            this.model.set('data', data);
+
+            var c = this._coords(fret, string);
+            var symbol = this._symbol(data[fret][string], c);            
+            this.dataSVG[fret][string] = symbol;
+            if (symbol)
+                this.el.appendChild(symbol);
+        },
+
         onClickFoo: function(e) {
             // hacky - make better
             var scale = $('.chordGridCollectionView').width() / 900;
@@ -196,6 +215,7 @@
             var n = this._nearest(normalizedX, normalizedY);
             var fret = n[0];
             var string = n[1];
+
             if (this.model.get('data')[fret][string]) {
                 if (this.dataSVG[fret][string]) {
                     this.el.removeChild(this.dataSVG[fret][string]);
@@ -203,15 +223,8 @@
                 }
             }
 
-            var data = this.model.get('data');
-            data[fret][string] = (data[fret][string] + 1 + 5) % 5;
-            this.model.set('data', data);
-
-            var c = this._coords(fret, string);
-            var symbol = this._symbol(data[fret][string], c);            
-            this.dataSVG[fret][string] = symbol;
-            if (symbol)
-                this.el.appendChild(symbol);
+            var symbol = (this.model.get('data')[fret][string] + 1 + 5) % 5;
+            this.setSymbol(string, fret, symbol);
         }
     });
 })();
