@@ -22,6 +22,24 @@
             }
             if (options && options.success)
                 options.success('SHUCKSHESH!');
+        },
+
+        load: function(str) {
+            var m = [ ];
+            while(str.length) {
+                var g = str.substring(0, 36);
+                str = str.substring(36);
+                var model = new app.ChordGrid();
+                var data = model.get('data');
+                for (var i = 6; i < 36; ++i) {
+                    var row = Math.floor(i / 6);
+                    var col = Math.floor(i % 6);
+                    data[row][col] = parseInt(g[i]);
+                }
+                m.push(model);
+            }
+            console.dir(m);
+            this.set(m);
         }
     });
 }());

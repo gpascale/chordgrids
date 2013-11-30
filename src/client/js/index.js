@@ -26,6 +26,17 @@
 			}
 		});
 
+		$('.newBtn').click(function() {
+			col.reset([ new app.ChordGrid(), new app.ChordGrid() ]);
+		});
+
+		$('.loadBtn').click(function() {
+			var string = '';
+			for (var i = 0; i < 36 * 40; ++i)
+				string += ('0' + Math.floor(Math.random() * 5));
+			col.load(string);
+		});
+
 		$('.saveBtn').click(function() {
 			col.sync('update');
 		});

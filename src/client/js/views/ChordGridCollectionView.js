@@ -9,12 +9,13 @@
         _timeout: null,
 
         onRender: function() {
+            this.$el.empty();
             var svg = $('<svg xmlns="http://www.w3.org/2000/svg" version="1.1"' +
-                    'width="100%"></svg>').get(0);      
-
+                    'width="100%"></svg>').get(0);
             this._svgRoot = app.common.makeSVG('g');
             svg.appendChild(this._svgRoot);
             this.$el.append($(svg));
+            console.log("REEEENDDAAAAAAA");
         },
 
         buildItemView: function(item, ItemViewType, itemViewOptions) {
@@ -35,6 +36,7 @@
         },
 
         appendHtml: function(collectionView, itemView, index) {
+            console.log("appendify " + itemView.el);
             var xOffset = index % 6 * itemView.width;
             var yOffset = Math.floor(index / 6) * itemView.height;
             itemView.setPosition(xOffset, yOffset);
@@ -55,10 +57,10 @@
             var newScrollX = newFocusX - focalPoint.x;
             var newScrollY = newFocusY - focalPoint.y;
 
-            this.$el.width(this._zoom * 900);
-            this.$el.height(this._zoom * 1500);
+            this.$el.width(this._zoom * 918);
+            this.$el.height(this._zoom * 1068);
             window.scrollTo(newScrollX, newScrollY);
             return false;
-        },
+        }
     });
 }());
