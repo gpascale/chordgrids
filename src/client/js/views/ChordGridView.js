@@ -1,21 +1,6 @@
 (function() {
     var app = window.ChordGrids = (window.ChordGrids || {});
 
-/*
-    var this.padding = 40;
-    var this.fretWidth = 10;
-    var this.fretSpacing = 60;
-    var this.stringWidth = 5;
-    var this.stringSpacing = 50;
-
-    var width = 2 * padding + 6 * stringWidth + 5 * stringSpacing;
-    var height = 2 * padding + 6 * this.fretWidth + 5 * fretSpacing;
-
-    
-    */
-
-    
-
     app.ChordGridView = Marionette.ItemView.extend({
         template: '#ChordGridTemplate',
         className: 'chordGridView',
@@ -26,14 +11,14 @@
         model: app.ChordGrid,
 
         initialize: function(params) {
-            this.width = params.width || 300;
-            this.height = params.height || 400;
-            this.padding = this.width * 0.1;
-            this.fretWidth = this.width * 0.03;
-            this.stringWidth = this.width * 0.015;
-            this.stringSpacing = 0.2 * (this.width - 2 * this.padding - 6 * this.stringWidth);
-            this.fretSpacing = 0.2 * (this.height - 2 * this.padding - 6 * this.fretWidth);
-            this.symbolR = 0.05 * this.width;
+            this.fretWidth = 4;
+            this.stringWidth = 2;
+            this.stringSpacing = 19;
+            this.fretSpacing = 26;
+            this.symbolR = 9;
+            this.padding = { left: 30, top: 20, right: 10, bottom: 10 };
+            this.width = this.padding.left + this.padding.right + this.stringWidth + 5 * (this.stringSpacing + this.stringWidth);
+            this.height = this.padding.top + this.padding.bottom + this.fretWidth + 5 * (this.fretSpacing + this.fretWidth);
             this.dataSVG = [ [], [], [], [], [], [] ];
             this.x = 0;
             this.y = 0;
@@ -46,8 +31,8 @@
         },
 
         _coords: function(fret, string) {
-            return [ this.padding + 0.5 * this.stringWidth + string * (this.stringSpacing + this.stringWidth),
-                     this.padding + 0.5 * this.fretWidth + fret * (this.fretSpacing + this.fretWidth) - 0.5 * this.fretSpacing - 0.5 * this.fretWidth ];
+            return [ this.padding.left + 0.5 * this.stringWidth + string * (this.stringSpacing + this.stringWidth),
+                     this.padding.top + 0.5 * this.fretWidth + fret * (this.fretSpacing + this.fretWidth) - 0.5 * this.fretSpacing - 0.5 * this.fretWidth ];
         },
 
         _nearest: function(x, y) {
@@ -89,10 +74,10 @@
             // Frets
             for (var i = 0; i < 6; ++i) {
                 var fret = app.common.makeSVG('line', {
-                    x1: this.padding,
-                    x2: this.width - this.padding,
-                    y1: this.padding + 0.5 * this.fretWidth + i * (this.fretSpacing + this.fretWidth),
-                    y2: this.padding + 0.5 * this.fretWidth + i * (this.fretSpacing + this.fretWidth),
+                    x1: this.padding.left,
+                    x2: this.width - this.padding.right,
+                    y1: this.padding.top + 0.5 * this.fretWidth + i * (this.fretSpacing + this.fretWidth),
+                    y2: this.padding.top + 0.5 * this.fretWidth + i * (this.fretSpacing + this.fretWidth),
                     stroke: 'rgb(0, 0, 0)',
                     'stroke-width': this.fretWidth
                 });
@@ -102,21 +87,35 @@
             // Strings
             for (var i = 0; i < 6; ++i) {
                 var string = app.common.makeSVG('line', {
-                    y1: this.padding,
-                    y2: this.height - this.padding,
-                    x1: this.padding + i * (this.stringSpacing + this.stringWidth) + 0.5 * this.stringWidth,
-                    x2: this.padding + i * (this.stringSpacing + this.stringWidth) + 0.5 * this.stringWidth,
+                    y1: this.padding.top,
+                    y2: this.height - this.padding.bottom,
+                    x1: this.padding.left + i * (this.stringSpacing + this.stringWidth) + 0.5 * this.stringWidth,
+                    x2: this.padding.left + i * (this.stringSpacing + this.stringWidth) + 0.5 * this.stringWidth,
                     stroke: 'rgb(0, 0, 0)',
                     'stroke-width': this.stringWidth
                 });
                 this.el.appendChild(string);
             }
 
-            for (var fret = 0; fret < 6; ++fret) {
-                for (var string = 0; string < 6; ++string) {
+            var number = app.common.makeSVG('foreignObject', {
+                x: 5,
+                y: 25,
+                width: 20,
+                height: 20
+            });
+            var div = $('<input class="numberInput" value="7" style="text-align:right; width:20px"></input>');
+            $(number).append(div);
+            this.el.appendChild(number);
 
-                }
-            }
+            var name = app.common.makeSVG('foreignObject', {
+                x: 10,
+                y: 0,
+                width: this.width,
+                height: 20
+            });
+            var div = $('<input class="nameInput" style="text-align:center; width:' + this.width + 'px" value="B Maj 7"></input>');
+            $(name).append(div);
+            this.el.appendChild(name);
 
             this.$el.width(this.width);
             this.$el.height(this.height);

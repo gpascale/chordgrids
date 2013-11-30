@@ -3,10 +3,12 @@
 
 	$(document).ready(function() {
 		
-		var col = new Backbone.Collection();
+		var col = new app.ChordGridCollection();
 		var gridCollectionView = new app.ChordGridCollectionView({ collection: col }).render();
-		for (var i = 0; i < 60; ++i)
-			col.add(new app.ChordGrid());
+		for (var i = 0; i < 40; ++i) {
+			var cg = new app.ChordGrid()
+			col.add(cg);
+		}
 		
 		var controlsView = new app.ControlsView().render();
 		controlsView.on('zoom', function(delta) {
@@ -22,6 +24,10 @@
 				var focalPoint = { x: e.clientX, y: e.clientY };
 				gridCollectionView.doZoom(delta, focalPoint);
 			}
+		});
+
+		$('.saveBtn').click(function() {
+			col.sync('update');
 		});
 	});
 })();

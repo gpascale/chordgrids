@@ -42,8 +42,8 @@
         },
 
         appendHtml: function(collectionView, itemView, index) {
-            var xOffset = index % 7 * 130;
-            var yOffset = Math.floor(index / 7) * 160;
+            var xOffset = index % 6 * itemView.width;
+            var yOffset = Math.floor(index / 6) * itemView.height;
             itemView.setPosition(xOffset, yOffset);
             this._svgRoot.appendChild(itemView.el);
         },
@@ -63,7 +63,7 @@
             var newScrollY = newFocusY - focalPoint.y;
 
             this.$el.width(this._zoom * 900);
-            this.$el.height(this._zoom * 1100);
+            this.$el.height(this._zoom * 1500);
             window.scrollTo(newScrollX, newScrollY);
             return false;
         },
