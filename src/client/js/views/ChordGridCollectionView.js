@@ -10,27 +10,23 @@
 
         onRender: function() {
             this.$el.empty();
-            var svg = $('<svg xmlns="http://www.w3.org/2000/svg" version="1.1"' +
-                    'width="100%"></svg>').get(0);
-            this._svgRoot = app.common.makeSVG('g');
-            svg.appendChild(this._svgRoot);
-            this.$el.append($(svg));
+            //var svg = $('<svg xmlns="http://www.w3.org/2000/svg" version="1.1"' +
+            //        'width="100%"></svg>').get(0);
+            //this._svgRoot = app.common.makeSVG('g');
+            //svg.appendChild(this._svgRoot);
+            //this.$el.append($(svg));
         },
 
         buildItemView: function(item, ItemViewType, itemViewOptions) {
             var options = _.extend({
-                model: item,
-                width: 100,
-                height: 133
+                model: item
             }, itemViewOptions);
-            var el = app.common.makeSVG('g', {
-                width: '300px',
-                height: '300px'
-            });
+            var el = 
             options = _.extend({
                 el: el
             }, options);
             var view = new ItemViewType(options);
+            view.$el.addClass();
             return view;
         },
 
@@ -38,7 +34,7 @@
             var xOffset = index % 6 * itemView.width;
             var yOffset = Math.floor(index / 6) * itemView.height;
             itemView.setPosition(xOffset, yOffset);
-            this._svgRoot.appendChild(itemView.el);
+            this.el.appendChild(itemView.el);
         },
 
         doZoom: function(delta, focalPoint) {
@@ -46,7 +42,10 @@
                 focalPoint = { x: 450, y: 550 };
 
             this._zoom = Math.max(0.25, Math.min(4, this._zoom * delta));
-            $(this._svgRoot).css('-webkit-transform', 'scale(' + this._zoom + ', ' + this._zoom + ')');
+            $(this.el).css({ 
+                '-webkit-transform': 'scale(' + this._zoom + ', ' + this._zoom + ')',
+                '-webkit-transform-origin': '0 0',
+                '-webkit-transform-style': 'flat' });
 
             var focusX = window.scrollX + focalPoint.x;
             var focusY = window.scrollY + focalPoint.y;
@@ -55,9 +54,9 @@
             var newScrollX = newFocusX - focalPoint.x;
             var newScrollY = newFocusY - focalPoint.y;
 
-            this.$el.width(this._zoom * 918);
-            this.$el.height(this._zoom * 1068);
-            window.scrollTo(newScrollX, newScrollY);
+            this.$el.parent().width(this._zoom * 918);
+            this.$el.parent().height(this._zoom * 1068);
+            //window.scrollTo(newScrollX, newScrollY);
             return false;
         }
     });
