@@ -1,0 +1,52 @@
+<html>
+
+	<head>
+
+    <script type="text/template" id="ControlsViewTemplate">
+        <button class="btn btn-large zoomIn">+</button>
+        <button class="btn btn-large zoomOut">-</button>
+    </script>
+
+    <!-- css -->
+    <link rel="stylesheet" href="ext/bootstrap/css/bootstrap.min.css">
+	<link href="css/index.css" rel="stylesheet" type="text/css">
+	
+    <!-- templates -->
+    <script type="text/template" id="ChordGridViewTemplate">
+            <input class="chordName" value=""></input>
+        <input class="fretNumber" value="1"></input>
+        <svg width="300px" height="300px"></svg>
+    </script>
+
+    <!-- js -->
+    <script src="ext/js/jquery.min-1.10.2.js"></script>
+    <script src="ext/bootstrap/js/bootstrap.min.js"></script>
+	<script src="ext/js/d3.v3.min.js" charset="utf-8"></script>
+    <script src="ext/js/underscore-min-1.5.1.js"></script>
+    <script src="ext/js/backbone.js"></script>
+    <script src="ext/js/backbone.marionette.min.js"></script>
+
+    <script src="js/common.js"></script>
+    <script src="js/models/ChordGrid.js"></script>
+    <script src="js/views/ChordGridView.js"></script>
+    <script src="js/models/ChordGridCollection.js"></script>
+    <script src="js/views/ChordGridCollectionView.js"></script>
+    <script src="js/views/ControlsView.js"></script>
+    <script src="js/index.js"></script>
+
+	</head>
+    <body>
+      <div class="navbar">
+          <div class="navbar-inner">
+            <a class="brand" href="#">Chord Grids!</a>
+            <ul class="nav">
+              <li><a href="#" class="saveBtn">Save</a></li>
+              <li><a href="#" class="loadBtn">Load</a></li>
+              <li><a href="#" class="newBtn">New</a></li>
+          </ul>
+      </div>
+    </div>
+    <div id="content">
+    </div>
+	</body>
+</html>
