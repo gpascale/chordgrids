@@ -12,7 +12,8 @@
     app.ChordGrid = Backbone.Model.extend({
         defaults: function() {
             return  {
-                fret: 0,
+                name: '',
+                fret: 1,
                 data: [
                     [0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0],

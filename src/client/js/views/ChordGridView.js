@@ -7,7 +7,8 @@
         tagName: 'div',
         events: {
             'click svg': '_onClick',
-            'keypress input': '_onInputKeypress'
+            'keypress input': '_onInputKeypress',
+            'blur input': '_onInputBlur'
         },
         model: app.ChordGrid,
 
@@ -17,18 +18,12 @@
             this.stringSpacing = 19;
             this.fretSpacing = 26;
             this.symbolR = 9;
-            this.padding = { left: 5, top: 5, right: 5, bottom: 5 };
+            this.padding = { left: 10, top: 5, right: 10, bottom: 5 };
             this.width = this.padding.left + this.padding.right + this.stringWidth + 5 * (this.stringSpacing + this.stringWidth);
             this.height = this.padding.top + this.padding.bottom + this.fretWidth + 5 * (this.fretSpacing + this.fretWidth);
             this.dataSVG = [ [], [], [], [], [], [] ];
             this.x = 0;
             this.y = 0;
-        },
-
-        setPosition: function(x, y) {
-            this.x = x;
-            this.y = y;
-            //this.$el.attr('transform', 'translate(' + x + ',' + y + ')');
         },
 
         _coords: function(fret, string) {
@@ -60,11 +55,7 @@
         },
 
         onRender: function() {
-            this.svgEl = this.$('svg').get(0);//app.common.makeSVG('svg', {
-                /*width: '300px',
-                height: '300px'
-            });
-            this.el.appendChild(this.svgEl);*/
+            this.svgEl = this.$('svg').get(0);
 
             // Background
             var background = app.common.makeSVG('rect', {
@@ -102,30 +93,10 @@
                 });
                 this.svgEl.appendChild(string);
             }
-/*
-            // Fret Number
-            var number = app.common.makeSVG('foreignObject', {
-                x: 5,
-                y: 25,
-                width: 20,
-                height: 20
-            });
-            var div = $('<input class="numberInput" value="7" style="text-align:right; width:20px"></input>');
-            $(number).append(div);
-            this.svgEl.appendChild(number);
 
-            // Chord Name
-            var name = app.common.makeSVG('foreignObject', {
-                x: 10,
-                y: 0,
-                width: this.width,
-                height: 20
-            });
-            var div = $('<input class="nameInput" style="text-align:center; width:' + this.width + 'px" value="B Maj 7"></input>');
-            $(name).append(div);
-            this.svgEl.appendChild(name);
-*/
             // Synchronize with model
+            this.$('.chordName').val(this.model.get('name'));
+            this.$('.fretNumber').val(this.model.get('fret'));
             var data = this.model.get('data');
             for (var fret = 0; fret < 6; ++fret) {
                 for (var string = 0; string < 6; ++string) {
@@ -226,11 +197,22 @@
 
             var symbol = (this.model.get('data')[fret][string] + 1 + 5) % 5;
             this.setSymbol(fret, string, symbol);
+
+            return false;
         },
 
         _onInputKeypress: function(e) {
-            if (e.keyCode == 13)
+            if (e.keyCode == 13) {
                 $(e.target).blur();
+                return false;
+            }
+        },
+
+        _onInputBlur: function(e) {
+            if ($(e.target).hasClass('chordName'))
+                this.model.set('name', $(e.target).val());
+            else
+                this.model.set('fret', $(e.target).val());
         }
     });
 })();

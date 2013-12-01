@@ -24,21 +24,26 @@
                 options.success('SHUCKSHESH!');
         },
 
+        save: function() {
+            var res = [ ];
+            _.each(this.models, function(model) {
+                res.push(model.toJSON());
+            });
+            console.log(JSON.stringify(res));
+        },
+
         load: function(str) {
             var m = [ ];
-            while(str.length) {
-                var g = str.substring(0, 36);
-                str = str.substring(36);
-                var model = new app.ChordGrid();
-                var data = model.get('data');
-                for (var i = 6; i < 36; ++i) {
-                    var row = Math.floor(i / 6);
-                    var col = Math.floor(i % 6);
-                    data[row][col] = parseInt(g[i]);
-                }
+            var json = JSON.parse(str);
+            for (var i = 0; i < json.length; ++i) {
+                var data = json[i];
+                var model = new app.ChordGrid({
+                    name: data.name,
+                    fret: data.fret,
+                    data: data.data
+                });
                 m.push(model);
             }
-            console.dir(m);
             this.set(m);
         }
     });
