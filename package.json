@@ -17,5 +17,7 @@
     "npm": "1.2.x"
   },
   "devDependencies": {},
-  "postinstall": "./node_modules/.bin/grunt"
+  "scripts": {
+    "postinstall": "./node_modules/.bin/grunt"
+  }
 }
