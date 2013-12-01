@@ -27,7 +27,7 @@
 		});
 
 		$('.newBtn').click(function() {
-			col.reset([ new app.ChordGrid(), new app.ChordGrid() ]);
+			col.set([ new app.ChordGrid(), new app.ChordGrid() ]);
 		});
 
 		$('.loadBtn').click(function() {

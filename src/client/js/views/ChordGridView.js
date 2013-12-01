@@ -59,14 +59,12 @@
         },
 
         onRender: function() {
-            console.log("ChordGridView render!");
-
             // Background
             var background = app.common.makeSVG('rect', {
-                x: this.padding.left,
-                y: this.padding.top,
-                width: this.width - this.padding.left - this.padding.right,
-                height: this.height - this.padding.top - this.padding.bottom,
+                x: this.padding.left - 5,
+                y: this.padding.top - 5,
+                width: this.width - this.padding.left - this.padding.right + 10,
+                height: this.height - this.padding.top - this.padding.bottom + 10,
                 fill: "rgb(255,255,255)"
             });
             $(background).addClass('background');
@@ -146,9 +144,8 @@
 
         _onClick: function(e) {
             // hacky - make better
-            console.log("client " + e.clientX + ", " + e.clientY);
-            console.log("offset " + e.offsetX + ", " + e.offsetY);
-            return;
+            /*console.log("client " + e.clientX + ", " + e.clientY);
+            console.log("offset " + e.offsetX + ", " + e.offsetY);*/
             var scale = $('.chordGridCollectionView').width() / 918;
 
             var normalizedX = (e.offsetX - window.scrollX) / scale - (this.x - (window.scrollX / scale));

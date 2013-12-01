@@ -15,7 +15,6 @@
             this._svgRoot = app.common.makeSVG('g');
             svg.appendChild(this._svgRoot);
             this.$el.append($(svg));
-            console.log("REEEENDDAAAAAAA");
         },
 
         buildItemView: function(item, ItemViewType, itemViewOptions) {
@@ -36,7 +35,6 @@
         },
 
         appendHtml: function(collectionView, itemView, index) {
-            console.log("appendify " + itemView.el);
             var xOffset = index % 6 * itemView.width;
             var yOffset = Math.floor(index / 6) * itemView.height;
             itemView.setPosition(xOffset, yOffset);
