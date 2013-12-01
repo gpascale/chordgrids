@@ -75,16 +75,7 @@ module.exports = function(grunt) {
         console.log('new node process has pid ' + f._handle.pid);
         console.log("********** RESTARTED THE SERVER **********");
     });
-/*
-    grunt.loadNpmTasks('grunt-develop');
-    grunt.config('develop', {
-        server: {
-            file: 'app.js',
-            cmd: 'node',
-            options: { nospawn: true }
-        }
-    });
-*/
+
     /*************************************************************************/
     // Watch
     /*************************************************************************/
@@ -120,4 +111,6 @@ module.exports = function(grunt) {
             }
         }
     });
+
+    grunt.registerTask('default', [ 'less', 'copy' ]);
 };
