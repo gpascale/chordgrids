@@ -16,5 +16,6 @@
     "shelljs": "~0.2.6",
     "grunt-develop": "~0.2.2"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "postinstall": "./node_modules/.bin/grunt"
 }
