@@ -20,6 +20,23 @@
         <svg width="300px" height="300px"></svg>
     </script>
 
+    <script type="text/template" id="SavePopupTemplate">
+        <div class="saveDiv">
+            <p>Copy and paste this string to save your page</p>
+            <input class="foo" value='<%= data %>'></input>
+        </div>
+    </script>
+
+    <script type="text/template" id="LoadPopupTemplate">
+        <div class="loadDiv">
+            <p>Paste a saved page in here</p>
+            <input class="foo" value=''></input>
+            <button class="btn btn-large">Load</button>
+            <br>
+            <a href="#" data='[{"name":"D","fret":"5","data":[[0,0,0,0,0,0],[0,1,0,4,3,0],[0,0,0,3,4,0],[0,0,0,2,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]},{"name":"G","fret":"3","data":[[0,0,0,0,0,0],[1,0,1,1,0,0],[0,0,0,0,0,0],[0,2,4,0,0,0],[0,0,0,0,1,1],[0,0,0,0,0,0]]},{"name":"C","fret":"5","data":[[0,0,0,0,0,0],[0,0,0,2,4,0],[0,0,0,4,0,0],[0,1,0,3,0,0],[1,0,4,0,0,0],[0,0,3,0,0,0]]},{"name":"F","fret":"5","data":[[0,0,0,0,0,0],[0,0,0,1,1,1],[0,0,0,0,0,0],[0,0,2,0,0,0],[0,1,0,0,0,0],[0,0,0,0,0,0]]},{"name":"B","fret":5,"data":[[0,0,0,0,0,0],[0,0,0,0,1,1],[0,0,0,2,0,0],[1,0,1,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]}]'>Ted Green Autumn Leaves</a>
+        </div>
+    </script>
+
     <!-- js -->
     <script src="ext/js/jquery.min-1.10.2.js"></script>
     <script src="ext/bootstrap/js/bootstrap.min.js"></script>

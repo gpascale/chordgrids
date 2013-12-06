@@ -29,7 +29,8 @@
             _.each(this.models, function(model) {
                 res.push(model.toJSON());
             });
-            console.log(JSON.stringify(res));
+            console.log("save data: " + JSON.stringify(res));
+            return JSON.stringify(res);
         },
 
         load: function(str) {

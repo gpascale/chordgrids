@@ -30,11 +30,44 @@
 		});
 
 		$('.loadBtn').click(function() {
-			col.load('[{"name":"D","fret":"5","data":[[0,0,0,0,0,0],[0,1,0,4,3,0],[0,0,0,3,4,0],[0,0,0,2,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]},{"name":"G","fret":"3","data":[[0,0,0,0,0,0],[1,0,1,1,0,0],[0,0,0,0,0,0],[0,2,4,0,0,0],[0,0,0,0,1,1],[0,0,0,0,0,0]]},{"name":"C","fret":"5","data":[[0,0,0,0,0,0],[0,0,0,2,4,0],[0,0,0,4,0,0],[0,1,0,3,0,0],[1,0,4,0,0,0],[0,0,3,0,0,0]]},{"name":"F","fret":"5","data":[[0,0,0,0,0,0],[0,0,0,1,1,1],[0,0,0,0,0,0],[0,0,2,0,0,0],[0,1,0,0,0,0],[0,0,0,0,0,0]]},{"name":"B","fret":5,"data":[[0,0,0,0,0,0],[0,0,0,0,1,1],[0,0,0,2,0,0],[1,0,1,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]}]');
+			//col.load('[{"name":"D","fret":"5","data":[[0,0,0,0,0,0],[0,1,0,4,3,0],[0,0,0,3,4,0],[0,0,0,2,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]},{"name":"G","fret":"3","data":[[0,0,0,0,0,0],[1,0,1,1,0,0],[0,0,0,0,0,0],[0,2,4,0,0,0],[0,0,0,0,1,1],[0,0,0,0,0,0]]},{"name":"C","fret":"5","data":[[0,0,0,0,0,0],[0,0,0,2,4,0],[0,0,0,4,0,0],[0,1,0,3,0,0],[1,0,4,0,0,0],[0,0,3,0,0,0]]},{"name":"F","fret":"5","data":[[0,0,0,0,0,0],[0,0,0,1,1,1],[0,0,0,0,0,0],[0,0,2,0,0,0],[0,1,0,0,0,0],[0,0,0,0,0,0]]},{"name":"B","fret":5,"data":[[0,0,0,0,0,0],[0,0,0,0,1,1],[0,0,0,2,0,0],[1,0,1,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]}]');
+			var popup = $('<div class="popup"></div>');
+			var popupContainer = $('<div class=popupContainer></div>').append(popup);
+			$('body').append($('<div class="popupOverlay">'));
+			$('body').append(popupContainer);
+			var popupDiv = _.template($('#LoadPopupTemplate').html())();
+			popup.append(popupDiv);
+		});
+		$('body').on('click', '.loadDiv button', function() {
+			var str = $(this).parent().find('input').val();
+			console.log(str);
+			col.load(str);
+			closePopup();
+			return false;
+		});
+		$('body').on('click', '.popupContainer', function() {
+			closePopup();
+		});
+		$('body').on('click', '.popup', function() {
+			return false;
+		})
+		$('body').on('click', '.loadDiv a', function() {
+			$('.loadDiv').find('input').val($(this).attr('data'));
+		});
+		$('.saveBtn').click(function() {
+			var str = col.save('update');
+			var popup = $('<div class="popup"></div>');
+			var popupContainer = $('<div class=popupContainer></div>').append(popup);
+			$('body').append($('<div class="popupOverlay">'));
+			$('body').append(popupContainer);
+			str = str.replace()
+			var popupDiv = _.template($('#SavePopupTemplate').html())({ data: str });
+			popup.append(popupDiv);
 		});
 
-		$('.saveBtn').click(function() {
-			col.save('update');
-		});
+		function closePopup() {
+			$('.popupOverlay').remove();
+			$('.popupContainer').remove();
+		}
 	});
 })();
