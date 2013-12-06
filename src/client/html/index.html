@@ -10,10 +10,12 @@
     <!-- css -->
     <link rel="stylesheet" href="ext/bootstrap/css/bootstrap.min.css">
 	<link href="css/index.css" rel="stylesheet" type="text/css">
+    <link href="css/ChordGridView.css" rel="stylesheet" type="text/css">
 	
     <!-- templates -->
     <script type="text/template" id="ChordGridViewTemplate">
-            <input class="chordName" value=""></input>
+        <input class="chordName" value=""></input>
+        <a href="#" class="deleteBtn">X</a>
         <input class="fretNumber" value="1"></input>
         <svg width="300px" height="300px"></svg>
     </script>
@@ -36,7 +38,7 @@
 
 	</head>
     <body>
-      <div class="navbar">
+        <div class="navbar">
           <div class="navbar-inner">
             <a class="brand" href="#">Chord Grids!</a>
             <ul class="nav">

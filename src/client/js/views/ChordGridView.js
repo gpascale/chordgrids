@@ -8,7 +8,8 @@
         events: {
             'click svg': '_onClick',
             'keypress input': '_onInputKeypress',
-            'blur input': '_onInputBlur'
+            'blur input': '_onInputBlur',
+            'click .deleteBtn': '_onDeleteBtnClick'
         },
         model: app.ChordGrid,
 
@@ -213,6 +214,10 @@
                 this.model.set('name', $(e.target).val());
             else
                 this.model.set('fret', $(e.target).val());
+        },
+
+        _onDeleteBtnClick: function(e) {
+            this.model.destroy();
         }
     });
 })();

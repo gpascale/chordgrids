@@ -2,35 +2,8 @@ body {
     .navbar {
         position: fixed;
         width: 100%;
+        z-index: 1000000;
     }
-
-	.chordGridView {
-        text-align: left;
-        display: inline-block;
-        margin-right: 20px;
-        input {
-            cursor: text;
-        }
-        input.chordName {
-            display: block;
-            width: 117px;
-            position: relative;
-            left: 25px;
-            text-align: center;
-        }
-        input.fretNumber {
-            display: inline;
-            width: 20px;
-            vertical-align: top;
-            top: 10px;
-            left: 3px;
-            position: relative;
-            text-align: right;
-        }
-        svg {
-            cursor: crosshair;
-        }
-	}
 
     .chordGridCollectionView {
         width: 918px;
@@ -53,5 +26,9 @@ body {
 
     input {
         border: none;
+    }
+
+    a, a:hover {
+        text-decoration: none;
     }
 }
