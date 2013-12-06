@@ -13,6 +13,7 @@
         },
 
         buildItemView: function(item, ItemViewType, itemViewOptions) {
+            var self = this;
             var options = _.extend({
                 model: item
             }, itemViewOptions);
@@ -22,6 +23,10 @@
             }, options);
             var view = new ItemViewType(options);
             view.$el.addClass();
+            view.on('edited', function() {
+                if (view.model.cid == self.collection.last().cid)
+                    self.collection.add(new app.ChordGrid());
+            })
             return view;
         },
 

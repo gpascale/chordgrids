@@ -5,10 +5,7 @@
 		
 		var col = new app.ChordGridCollection();
 		var gridCollectionView = new app.ChordGridCollectionView({ collection: col }).render();
-		for (var i = 0; i < 40; ++i) {
-			var cg = new app.ChordGrid()
-			col.add(cg);
-		}
+		col.set([new app.ChordGrid()]);
 		
 		var controlsView = new app.ControlsView().render();
 		controlsView.on('zoom', function(delta) {
@@ -28,9 +25,7 @@
 		});
 
 		$('.newBtn').click(function() {
-			var arr = [ ];
-			for (var i = 0; i < 40; ++i) 
-				arr.push(new app.ChordGrid());
+			var arr = [ new app.ChordGrid() ];
 			col.set(arr);
 		});
 

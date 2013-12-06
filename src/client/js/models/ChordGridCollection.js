@@ -44,6 +44,7 @@
                 });
                 m.push(model);
             }
+            m.push(new app.ChordGrid());
             this.set(m);
         }
     });

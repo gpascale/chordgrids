@@ -25,6 +25,7 @@
             this.dataSVG = [ [], [], [], [], [], [] ];
             this.x = 0;
             this.y = 0;
+            this.$el.addClass('unedited');
         },
 
         _coords: function(fret, string) {
@@ -118,6 +119,7 @@
             this.dataSVG[fret][string] = symbol;
             if (symbol)
                 this.svgEl.appendChild(symbol);
+            this.$el.removeClass('unedited');
         },
 
         _createSymbol: function(type, c) {
@@ -198,11 +200,14 @@
 
             var symbol = (this.model.get('data')[fret][string] + 1 + 5) % 5;
             this.setSymbol(fret, string, symbol);
-
+            this.trigger('edited');
+            this.$el.removeClass('unedited');
             return false;
         },
 
         _onInputKeypress: function(e) {
+            this.trigger('edited');
+            this.$el.removeClass('unedited');
             if (e.keyCode == 13) {
                 $(e.target).blur();
                 return false;
