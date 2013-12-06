@@ -3,12 +3,15 @@ var shell = require('shelljs');
 
 module.exports = function(grunt) {
 
-	grunt.loadNpmTasks('grunt-contrib-copy');
+	/*************************************************************************/
+    // Clean
+    /*************************************************************************/
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.config('clean', [ 'public' ]);
 
 	/*************************************************************************/
     // Less
     /*************************************************************************/
-
 	grunt.loadNpmTasks('grunt-contrib-less');
 	var lessRoot = 'src/client/less/';
     var lessPattern = '**/*.less';
@@ -30,7 +33,7 @@ module.exports = function(grunt) {
     /*************************************************************************/
     // Js / Html / External client stuff
     /*************************************************************************/
-
+    grunt.loadNpmTasks('grunt-contrib-copy');
     var jsRoot = 'src/client/js/';
     var jsPattern = '**/*.js';
     var htmlRoot = 'src/client/html/';
@@ -53,6 +56,21 @@ module.exports = function(grunt) {
             cwd: 'src/client/ext',
             src: '**',
             dest: 'public/ext'
+        }
+    });
+
+    /*************************************************************************/
+    // Concat
+    /*************************************************************************/    
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.config('concat', {
+        less: {
+            src: 'public/css/*.css',
+            dest: 'public/css/index.css'
+        },
+        js: {
+            src: 'public/js/**/*.js',
+            dest: 'public/js/chordgrids.js'
         }
     });
 
@@ -84,22 +102,22 @@ module.exports = function(grunt) {
     grunt.config('watch', {
  		less: {
  	        files: [path.join(lessRoot, lessPattern)],
-            tasks: ['less'],
+            tasks: ['default'],
             options: { atBegin: true }
  		},
  		js: {
  			files: [path.join(jsRoot, jsPattern)],
- 			tasks: ['copy:js'],
+ 			tasks: ['default'],
             options: { atBegin: true }
  		},
  		html: {
  			files: [path.join(htmlRoot, htmlPattern)],
- 			tasks: ['copy:html'],
+ 			tasks: ['default'],
             options: { atBegin: true }
  		},
         ext: {
             files: [path.join('src/client/ext/**/*.*')],
-            tasks: ['copy:ext'],
+            tasks: ['default'],
             options: { atBegin: true }
         },
         app: {
@@ -112,5 +130,5 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', [ 'less', 'copy' ]);
+    grunt.registerTask('default', [ 'clean', 'less', 'copy', 'concat' ]);
 };

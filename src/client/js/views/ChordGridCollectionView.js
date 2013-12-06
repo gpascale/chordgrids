@@ -2,11 +2,14 @@
     var app = window.ChordGrids = (window.ChordGrids || {});
 
     app.ChordGridCollectionView = Marionette.CollectionView.extend({
-        itemView: app.ChordGridView,
         tagName: 'div',
         className: 'chordGridCollectionView',
         _zoom: 1,
         _timeout: null,
+
+        initialize: function() {
+            this.itemView = app.ChordGridView;
+        },
 
         onRender: function() {
             this.$el.empty();
