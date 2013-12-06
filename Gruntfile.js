@@ -70,7 +70,12 @@ module.exports = function(grunt) {
         },
         js: {
             src: 'public/js/**/*.js',
-            dest: 'public/js/chordgrids.js'
+            dest: 'public/js/chordgrids.js',
+            options: {
+                banner: ';(function() {\n',
+                separator: '\n})();\n(function() {\n',
+                footer: '})();\n'
+            }
         }
     });
 
@@ -108,17 +113,14 @@ module.exports = function(grunt) {
  		js: {
  			files: [path.join(jsRoot, jsPattern)],
  			tasks: ['default'],
-            options: { atBegin: true }
  		},
  		html: {
  			files: [path.join(htmlRoot, htmlPattern)],
  			tasks: ['default'],
-            options: { atBegin: true }
  		},
         ext: {
             files: [path.join('src/client/ext/**/*.*')],
             tasks: ['default'],
-            options: { atBegin: true }
         },
         app: {
             files: 'app.js',
