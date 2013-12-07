@@ -57,8 +57,6 @@ app.ChordGrid = Backbone.Model.extend({
             var fret = d[0] - '0';
             var string = d[1] - '0';
             var val = d[2] - '0';
-            console.log(fret + ', ' + string + ', ' + val);
-            debugger;
             data[fret][string] = val;
             d = d.substr(3);
         }

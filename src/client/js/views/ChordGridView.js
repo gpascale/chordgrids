@@ -1,7 +1,7 @@
 var app = window.ChordGrids = (window.ChordGrids || {});
 
 app.ChordGridView = Marionette.ItemView.extend({
-    template: '#ChordGridViewTemplate',
+    template: app.Templates.ChordGridView,
     className: 'chordGridView',
     tagName: 'div',
     events: {
@@ -143,7 +143,7 @@ app.ChordGridView = Marionette.ItemView.extend({
                     y1: c[1] - this.symbolR,
                     y2: c[1] + this.symbolR,
                     stroke: 'rgb(0, 0, 0)',
-                    'stroke-width': this.fretSpacing / 12
+                    'stroke-width': this.fretSpacing / 8
                 });
                 var l2 = app.common.makeSVG('line', {
                     x1: c[0] - this.symbolR,
@@ -151,7 +151,7 @@ app.ChordGridView = Marionette.ItemView.extend({
                     y1: c[1] + this.symbolR,
                     y2: c[1] - this.symbolR,
                     stroke: 'rgb(0, 0, 0)',
-                    'stroke-width': this.fretSpacing / 12
+                    'stroke-width': this.fretSpacing / 8
                 });
                 var x = app.common.makeSVG('g');
                 x.appendChild(l1);
@@ -166,7 +166,7 @@ app.ChordGridView = Marionette.ItemView.extend({
                     y: c[1] - this.symbolR,
                     fill: 'transparent',
                     stroke: 'rgb(0, 0, 0)',
-                    'stroke-width': this.fretSpacing / 12
+                    'stroke-width': this.fretSpacing / 8
                 });
                 return rect;
             }
@@ -179,7 +179,7 @@ app.ChordGridView = Marionette.ItemView.extend({
                     points: points,
                     fill: 'none',
                     stroke: 'rgb(0, 0, 0)',
-                    'stroke-width': this.fretSpacing / 12
+                    'stroke-width': this.fretSpacing / 8
                 });
                 return tri;
             }

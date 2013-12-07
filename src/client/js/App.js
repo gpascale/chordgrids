@@ -52,6 +52,10 @@ app.App.addInitializer(function() {
             if (e.keyCode == 13)
                 doLoad();
         })
+        popup.on('click', 'a', function() {
+            popup.find('input').val($(this).attr('data'));
+            doLoad();
+        })
         function doLoad() {
             var str = popup.find('input').val();
             col.load(str);
@@ -61,13 +65,21 @@ app.App.addInitializer(function() {
 
     function savePage() {
         var str = col.save('update');
+        console.log(str);
+        var saveModal = app.Templates.SaveModal({ data: str });
+        var popup = $(saveModal);
+        popup.modal('show');
+
+        /*
+        
         var popup = $('<div class="popup"></div>');
         var popupContainer = $('<div class=popupContainer></div>').append(popup);
         $('body').append($('<div class="popupOverlay">'));
         $('body').append(popupContainer);
         str = str.replace()
-        var popupDiv = _.template($('#SavePopupTemplate').html())({ data: str });
+        var popupDiv = _.template($('#SavePopupTemplate').html())();
         popup.append(popupDiv);
+        */
     }
 
     $('.loadBtn').click(function() {
