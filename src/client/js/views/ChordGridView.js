@@ -101,7 +101,8 @@ app.ChordGridView = Marionette.ItemView.extend({
         var data = this.model.get('data');
         for (var fret = 0; fret < 6; ++fret) {
             for (var string = 0; string < 6; ++string) {
-                this.setSymbol(fret, string, data[fret][string]);
+                if (data[fret][string])
+                    this.setSymbol(fret, string, data[fret][string]);
             }
         }
 

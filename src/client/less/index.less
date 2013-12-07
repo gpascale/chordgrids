@@ -8,8 +8,11 @@ body {
     .chordGridCollectionView {
         width: 918px;
         height: 1068px;
-        .chordGridView:last-child {
+        .chordGridView:last-child.unedited {
             opacity: 0.5;
+        }
+        input {
+            border: none;
         }
     }
 
@@ -24,10 +27,6 @@ body {
         text-align: center;
         position: fixed;
         width: 100%;
-    }
-
-    input {
-        border: none;
     }
 
     a, a:hover {

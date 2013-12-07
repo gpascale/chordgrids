@@ -60,17 +60,37 @@ module.exports = function(grunt) {
     });
 
     /*************************************************************************/
+    // Compile underscore templates
+    /*************************************************************************/
+    grunt.loadNpmTasks('grunt-contrib-jst');
+    grunt.config('jst', {
+        compile: {
+            options: {
+                namespace: 'ChordGrids.Templates',
+                processName: function(filename) {
+                    return path.basename(filename, '.tmpl');
+                },
+                prettify: true,
+                templateSettings: { variable: 'data' }
+            },
+            files: {
+                "public/js/templates.js": ["src/client/templates/*.tmpl"]
+            }
+        }
+    });
+
+    /*************************************************************************/
     // Concat
     /*************************************************************************/    
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.config('concat', {
         less: {
             src: 'public/css/*.css',
-            dest: 'public/css/index.css'
+            dest: 'public/chordgrids.css'
         },
         js: {
-            src: 'public/js/**/*.js',
-            dest: 'public/js/chordgrids.js',
+            src: ['public/js/templates.js', 'public/js/**/*.js'],
+            dest: 'public/chordgrids.js',
             options: {
                 banner: ';(function() {\n',
                 separator: '\n})();\n(function() {\n',
@@ -105,19 +125,11 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.config('watch', {
- 		less: {
- 	        files: [path.join(lessRoot, lessPattern)],
-            tasks: ['default'],
+ 		code: {
+            files: ['src/client/**/*'],
+            tasks: ['default'],
             options: { atBegin: true }
- 		},
- 		js: {
- 			files: [path.join(jsRoot, jsPattern)],
- 			tasks: ['default'],
- 		},
- 		html: {
- 			files: [path.join(htmlRoot, htmlPattern)],
- 			tasks: ['default'],
- 		},
+        },
         ext: {
             files: [path.join('src/client/ext/**/*.*')],
             tasks: ['default'],
@@ -132,5 +144,5 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', [ 'clean', 'less', 'copy', 'concat' ]);
+    grunt.registerTask('default', [ 'clean', 'less', 'copy', 'jst', 'concat' ]);
 };

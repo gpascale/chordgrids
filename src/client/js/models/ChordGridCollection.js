@@ -26,7 +26,9 @@ app.ChordGridCollection = Backbone.Collection.extend({
     save: function() {
         var res = [ ];
         _.each(this.models, function(model) {
-            res.push(model.toJSON());
+            var encoded = model.encode();
+            if (encoded)
+                res.push(model.encode());
         });
         console.log("save data: " + JSON.stringify(res));
         return JSON.stringify(res);
@@ -37,11 +39,7 @@ app.ChordGridCollection = Backbone.Collection.extend({
         var json = JSON.parse(str);
         for (var i = 0; i < json.length; ++i) {
             var data = json[i];
-            var model = new app.ChordGrid({
-                name: data.name,
-                fret: data.fret,
-                data: data.data
-            });
+            var model = new app.ChordGrid().decode(data);
             m.push(model);
         }
         m.push(new app.ChordGrid());

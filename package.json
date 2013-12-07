@@ -16,7 +16,9 @@
     "node": "0.10.x",
     "npm": "1.2.x"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "grunt-contrib-jst": "~0.5.1"
+  },
   "scripts": {
     "postinstall": "./node_modules/.bin/grunt"
   }

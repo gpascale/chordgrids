@@ -4,18 +4,20 @@ var app = window.ChordGrids = (window.ChordGrids || {});
 app.App = new Marionette.Application();
 
 app.App.addInitializer(function() {
+    // Basic layout - TODO move this into a region or some shit
     var col = new app.ChordGridCollection();
     var gridCollectionView = new app.ChordGridCollectionView({ collection: col }).render();
-    col.set([new app.ChordGrid()]);
-
     var controlsView = new app.ControlsView().render();
     controlsView.on('zoom', function(delta) {
         gridCollectionView.doZoom(delta);
     });
-
     $('#content').append(gridCollectionView.$el);
     $('#content').append(controlsView.$el);
 
+    // Start off with a new page
+    newPage();
+
+    // Zooming
     $('body').on('mousewheel', function(e) {
         if (e.metaKey) {
             var delta = 1.0 - e.originalEvent.deltaY / 100;
@@ -25,26 +27,59 @@ app.App.addInitializer(function() {
         }
     });
 
-    $('.newBtn').click(function() {
-        var arr = [ new app.ChordGrid() ];
+    function newPage() {
+        var arr = [ 
+            new app.ChordGrid({ 
+                "name": "G Maj",
+                "fret": 7,
+                "data": [[0,0,0,0,0,0],[0,0,0,1,0,1],[0,0,0,0,1,0],[0,0,1,0,0,0],[0,1,0,0,0,0],[0,0,0,0,0,0]]
+            }),
+            new app.ChordGrid({ 
+                "name": "",
+                "fret": 1,
+                "data": [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]
+            })
+        ];
         col.set(arr);
-    });
+    }
 
-    $('.loadBtn').click(function() {
+    function loadPage() {
+        var loadModal = app.Templates.LoadModal();
+        var popup = $(loadModal);
+        popup.modal('show');
+        popup.on('click', '.loadPopupLoadBtn', doLoad);
+        popup.on('keypress', 'input', function(e) {
+            if (e.keyCode == 13)
+                doLoad();
+        })
+        function doLoad() {
+            var str = popup.find('input').val();
+            col.load(str);
+            popup.modal('hide');
+        }
+    }
+
+    function savePage() {
+        var str = col.save('update');
         var popup = $('<div class="popup"></div>');
         var popupContainer = $('<div class=popupContainer></div>').append(popup);
         $('body').append($('<div class="popupOverlay">'));
         $('body').append(popupContainer);
-        var popupDiv = _.template($('#LoadPopupTemplate').html())();
+        str = str.replace()
+        var popupDiv = _.template($('#SavePopupTemplate').html())({ data: str });
         popup.append(popupDiv);
+    }
+
+    $('.loadBtn').click(function() {
+        loadPage();
     });
-    $('body').on('click', '.loadDiv button', function() {
-        var str = $(this).parent().find('input').val();
-        console.log(str);
-        col.load(str);
-        closePopup();
-        return false;
+    $('.saveBtn').click(function() {
+        savePage();
     });
+    $('.newBtn').click(function() {
+        newPage();
+    });
+
     $('body').on('click', '.popupContainer', function() {
         closePopup();
     });
@@ -54,16 +89,7 @@ app.App.addInitializer(function() {
     $('body').on('click', '.loadDiv a', function() {
         $('.loadDiv').find('input').val($(this).attr('data'));
     });
-    $('.saveBtn').click(function() {
-        var str = col.save('update');
-        var popup = $('<div class="popup"></div>');
-        var popupContainer = $('<div class=popupContainer></div>').append(popup);
-        $('body').append($('<div class="popupOverlay">'));
-        $('body').append(popupContainer);
-        str = str.replace()
-        var popupDiv = _.template($('#SavePopupTemplate').html())({ data: str });
-        popup.append(popupDiv);
-    });
+    
 
     function closePopup() {
         $('.popupOverlay').remove();
