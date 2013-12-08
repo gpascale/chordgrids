@@ -83,12 +83,18 @@ app.App.addInitializer(function() {
         })
     });
     $('.playBtn').click(function() {
-        app.playback.initialize(function() {
-            gridCollectionView.play();
-        });
+        if ($(this).hasClass('playBtn'))
+            app.playback.initialize(function() {
+                gridCollectionView.play();
+            });
+        else
+            gridCollectionView.stop();
     });
-    $('.stopBtn').click(function() {
-        gridCollectionView.stop();
+    gridCollectionView.on('playbackStarted', function() {
+        $('.playBtn').removeClass('playBtn').addClass('stopBtn').text('Stop');
+    });
+    gridCollectionView.on('playbackStopped', function() {
+        $('.stopBtn').removeClass('stopBtn').addClass('playBtn').text('Play');
     });
 
     $('.modal').on('keypress', function(e) {

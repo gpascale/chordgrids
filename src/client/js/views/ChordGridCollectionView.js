@@ -75,6 +75,7 @@ app.ChordGridCollectionView = Marionette.CollectionView.extend({
     },
 
     play: function() {
+        this.trigger('playbackStarted');
         var self = this;
         var idx = 0;
         playNext();
@@ -89,10 +90,14 @@ app.ChordGridCollectionView = Marionette.CollectionView.extend({
                     playNext();
                 }, 1000);
             }
+            else {
+                self.trigger('playbackStopped');
+            }
         }
     },
 
-    stop: function() {
+    stop: function(e) {
+        this.trigger('playbackStopped');
         clearTimeout(_playbackTimeout);
         this.$('.chordGridView').css('background-color', 'white');
     }
