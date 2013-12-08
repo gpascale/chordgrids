@@ -13,9 +13,9 @@ app.App.addInitializer(function() {
     newPage();
 
     // Zooming
-    $('body').on('mousewheel', function(e) {
+    $('body').mousewheel(function(e, delta) {
         if (e.metaKey) {
-            var delta = 1.0 - e.originalEvent.deltaY / 100;
+            var delta = 1.0 + delta / 100;
             var focalPoint = { x: e.clientX, y: e.clientY };
             gridCollectionView.doZoom(delta, focalPoint);
             return false;
