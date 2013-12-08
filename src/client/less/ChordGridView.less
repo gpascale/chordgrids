@@ -13,6 +13,10 @@
 
     input {
         cursor: text;
+        background-color: transparent;
+        &:focus {
+            background-color: white;
+        }
     }
     input.chordName {
         display: block;
@@ -31,11 +35,7 @@
         padding-right: 13px;
         top: 35px;
         left: 0px;
-        background-color: transparent;
         z-index: 3;
-        &:focus {
-            background-color: white;
-        }
     }
     svg {
         cursor: crosshair;

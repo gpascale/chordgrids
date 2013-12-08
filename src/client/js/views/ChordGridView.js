@@ -64,7 +64,7 @@ app.ChordGridView = Marionette.ItemView.extend({
             y: this.padding.top - 5,
             width: this.width - this.padding.left - this.padding.right + 10,
             height: this.height - this.padding.top - this.padding.bottom + 10,
-            fill: "rgb(255,255,255)"
+            fill: "none"
         });
         $(background).addClass('background');
         this.svgEl.appendChild(background);
