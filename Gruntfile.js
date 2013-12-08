@@ -39,12 +39,6 @@ module.exports = function(grunt) {
     var htmlRoot = 'src/client/html/';
     var htmlPattern = '**/*.html';
     grunt.config('copy', {
-    	js: {
-    		expand: true,
-    		cwd: 'src/client/js',
-    		src: jsPattern,
-    		dest: 'public/js'
-    	},
     	html: {
     		expand: true,
     		cwd: 'src/client/html',
@@ -84,13 +78,25 @@ module.exports = function(grunt) {
     /*************************************************************************/    
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.config('concat', {
+        extless: {
+            src: 'src/client/ext/bootstrap/css/bootstrap.min.css',
+            dest: 'public/css/deps.css'
+        },
         less: {
             src: 'public/css/*.css',
-            dest: 'public/chordgrids.css'
+            dest: 'public/css/chordgrids.css'
+        },
+        extjs: {
+            src: [ 'public/ext/js/jquery.min-1.10.2.js',
+                   'public/ext/bootstrap/js/bootstrap.min.js',
+                   'public/ext/js/underscore-min-1.5.1.js',
+                   'public/ext/js/backbone-min.js',
+                   'public/ext/js/backbone.marionette.min.js' ],
+            dest: 'public/js/deps.js'
         },
         js: {
-            src: ['public/js/templates.js', 'public/js/**/*.js'],
-            dest: 'public/chordgrids.js',
+            src: ['public/js/templates.js', 'src/client/js/**/*.js'],
+            dest: 'public/js/chordgrids.js',
             options: {
                 banner: ';(function() {\n',
                 separator: '\n})();\n(function() {\n',
@@ -126,7 +132,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.config('watch', {
  		code: {
-            files: ['src/client/**/*'],
+            files: ['src/client/**/*', 'Gruntfile.js'],
             tasks: ['default'],
             options: { atBegin: true }
         },
