@@ -88,6 +88,7 @@ module.exports = function(grunt) {
         },
         extjs: {
             src: [ 'public/ext/js/jquery.min-1.10.2.js',
+                   'public/ext/js/jquery.mousewheel.min.js',
                    'public/ext/bootstrap/js/bootstrap.min.js',
                    'public/ext/js/underscore-min-1.5.1.js',
                    'public/ext/js/backbone-min.js',
