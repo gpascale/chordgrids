@@ -14,6 +14,7 @@ app.ChordGridCollectionView = Marionette.CollectionView.extend({
     onRender: function() {
         this.$el.empty();
         $(window).bind('resize', _.bind(this._resizeHandler, this));
+        this._resizeHandler();
     },
 
     onBeforeClose: function() {
