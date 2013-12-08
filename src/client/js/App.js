@@ -83,12 +83,19 @@ app.App.addInitializer(function() {
         })
     });
     $('.playBtn').click(function() {
-        if ($(this).hasClass('playBtn'))
+        var $this = $(this);
+        if ($(this).hasClass('disabled'))
+            return;
+        if ($this.hasClass('playBtn')) {
+            $this.addClass('disabled');
             app.playback.initialize(function() {
                 gridCollectionView.play();
+                $this.removeClass('disabled');
             });
-        else
+        }
+        else {
             gridCollectionView.stop();
+        }
     });
     gridCollectionView.on('playbackStarted', function() {
         $('.playBtn').removeClass('playBtn').addClass('stopBtn').text('Stop');
