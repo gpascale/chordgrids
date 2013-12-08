@@ -50,7 +50,7 @@ app.playback = {
 	},
 
 	_getNote: function(fret, string) {
-		var lowE = 52;
+		var lowE = 40;
 		var offsets = [ 0, 5, 10, 15, 19, 24 ];
 		return lowE + offsets[string] + fret;
 	}

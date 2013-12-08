@@ -95,7 +95,7 @@ module.exports = function(grunt) {
                    'public/ext/js/backbone.marionette.min.js',
                    'public/ext/js/Base64.js',
                    'public/ext/js/base64binary.js',
-                   'public/ext/js/MIDI.js' ],
+                   'public/ext/js/MIDI.min.js' ],
             dest: 'public/js/deps.js'
         },
         js: {
