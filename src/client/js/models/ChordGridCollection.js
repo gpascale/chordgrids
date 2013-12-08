@@ -30,7 +30,6 @@ app.ChordGridCollection = Backbone.Collection.extend({
             if (encoded)
                 res.push(model.encode());
         });
-        console.log("save data: " + JSON.stringify(res));
         return JSON.stringify(res);
     },
 

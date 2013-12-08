@@ -1,10 +1,10 @@
 .chordGridView {
     text-align: left;
     display: inline-block;
-    margin-right: 10px;
-    padding: 3px;
+    padding: 5px;
     position: relative;
     border: 1px transparent solid;
+    width: 140px;
 
     transition-property: top, left, box-shadow;
     transition-duration: 0.25s, 0.25s, 0.25s;
@@ -18,21 +18,29 @@
         display: block;
         width: 80px;
         position: relative;
-        left: 45px;
+        left: 40px;
         text-align: center;
     }
     input.fretNumber {
         clear: both;
         display: inline;
-        width: 20px;
+        width: 32px;
         vertical-align: top;
-        top: 10px;
-        left: 3px;
-        position: relative;
+        position: absolute;
         text-align: right;
+        padding-right: 13px;
+        top: 35px;
+        left: 0px;
+        background-color: transparent;
+        z-index: 3;
+        &:focus {
+            background-color: white;
+        }
     }
     svg {
         cursor: crosshair;
+        position: relative;
+        left: 15px;
     }
     .deleteBtn {
         position: absolute;

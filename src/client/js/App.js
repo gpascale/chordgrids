@@ -7,12 +7,7 @@ app.App.addInitializer(function() {
     // Basic layout - TODO move this into a region or some shit
     var col = new app.ChordGridCollection();
     var gridCollectionView = new app.ChordGridCollectionView({ collection: col }).render();
-    var controlsView = new app.ControlsView().render();
-    controlsView.on('zoom', function(delta) {
-        gridCollectionView.doZoom(delta);
-    });
     $('#content').append(gridCollectionView.$el);
-    $('#content').append(controlsView.$el);
 
     // Start off with a new page
     newPage();
@@ -69,27 +64,27 @@ app.App.addInitializer(function() {
         var saveModal = app.Templates.SaveModal({ data: str });
         var popup = $(saveModal);
         popup.modal('show');
-
-        /*
-        
-        var popup = $('<div class="popup"></div>');
-        var popupContainer = $('<div class=popupContainer></div>').append(popup);
-        $('body').append($('<div class="popupOverlay">'));
-        $('body').append(popupContainer);
-        str = str.replace()
-        var popupDiv = _.template($('#SavePopupTemplate').html())();
-        popup.append(popupDiv);
-        */
     }
 
+    $('.newBtn').click(function() {
+        newPage();
+    });
     $('.loadBtn').click(function() {
         loadPage();
     });
     $('.saveBtn').click(function() {
         savePage();
     });
-    $('.newBtn').click(function() {
-        newPage();
+    $('.helpBtn').click(function() {
+        var helpModal = app.Templates.HelpModal();
+        $(helpModal).modal('show');
+        $(helpModal, '.btn').click(function() {
+            $(helpModal).modal('hide');
+        })
+    });
+
+    $('.modal').on('keypress', function(e) {
+        console.log(e.keyCode);
     });
 
     $('body').on('click', '.popupContainer', function() {
