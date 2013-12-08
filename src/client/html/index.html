@@ -1,39 +1,31 @@
 <html>
 
 	<head>
-
     <!-- css -->
     <link href="css/deps.css" rel="stylesheet" type="text/css">
 	<link href="css/chordgrids.css" rel="stylesheet" type="text/css">
-
     <!-- js -->
-    <!--
-    <script src="ext/js/jquery.min-1.10.2.js"></script>
-    <script src="ext/bootstrap/js/bootstrap.min.js"></script>
-	<script src="ext/js/d3.v3.min.js" charset="utf-8"></script>
-    <script src="ext/js/underscore-min-1.5.1.js"></script>
-    <script src="ext/js/backbone.js"></script>
-    <script src="ext/js/backbone.marionette.min.js"></script>
-    -->
-
     <script src="js/deps.js"></script>
     <script src="js/chordgrids.js"></script>
-
 	</head>
+
     <body>
+        <!-- TODO - make this all a Marionette region/layout/whatever -->
         <div class="navbar">
-          <div class="navbar-inner">
-            <a class="brand" href="#">Chord Grids!</a>
-            <ul class="nav">
-              <li><a href="#" class="newBtn">New</a></li>
-              <li><a href="#" class="saveBtn">Save</a></li>
-              <li><a href="#" class="loadBtn">Load</a></li>
-              <li><a href="#" class="helpBtn">Help</a></li>
-          </ul>
-      </div>
-    </div>
-    <div id="content">
-    </div>
+            <div class="navbar-inner">
+                <a class="brand" href="#">Chord Grids!</a>
+                <ul class="nav">
+                    <li><a href="#" class="newBtn">New</a></li>
+                    <li><a href="#" class="saveBtn">Save</a></li>
+                    <li><a href="#" class="loadBtn">Load</a></li>
+                    <li><a href="#" class="helpBtn">Help</a></li>
+                    <li><a href="#" class="playBtn">Play</a></li>
+                    <li><a href="#" class="stopBtn">Stop</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="content">
+        </div>
 	</body>
 
     <script>

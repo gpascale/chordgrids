@@ -4,7 +4,8 @@ app.ChordGridCollectionView = Marionette.CollectionView.extend({
     tagName: 'div',
     className: 'chordGridCollectionView',
     _zoom: 1,
-    _timeout: null,
+    _playbackTimeout: null,
+
 
     initialize: function() {
         this.itemView = app.ChordGridView;
@@ -60,5 +61,28 @@ app.ChordGridCollectionView = Marionette.CollectionView.extend({
             window.scrollTo(newScrollX, newScrollY);
         }
         return false;
+    },
+
+    play: function() {
+        var self = this;
+        var idx = 0;
+        playNext();
+        function playNext() {
+            if (idx < self.collection.models.length) {
+                var itemView = self.children.findByIndex(idx);
+                itemView.$el.css('background-color', 'yellow');
+                app.playback.play(self.collection.models[idx]);
+                ++idx;
+                _playbackTimeout = setTimeout(function() {
+                    itemView.$el.css('background-color', 'white');
+                    playNext();
+                }, 1000);
+            }
+        }
+    },
+
+    stop: function() {
+        clearTimeout(_playbackTimeout);
+        this.$('.chordGridView').css('background-color', 'white');
     }
 });

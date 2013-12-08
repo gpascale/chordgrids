@@ -91,7 +91,10 @@ module.exports = function(grunt) {
                    'public/ext/bootstrap/js/bootstrap.min.js',
                    'public/ext/js/underscore-min-1.5.1.js',
                    'public/ext/js/backbone-min.js',
-                   'public/ext/js/backbone.marionette.min.js' ],
+                   'public/ext/js/backbone.marionette.min.js',
+                   'public/ext/js/Base64.js',
+                   'public/ext/js/base64binary.js',
+                   'public/ext/js/MIDI.js' ],
             dest: 'public/js/deps.js'
         },
         js: {

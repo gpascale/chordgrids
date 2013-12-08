@@ -82,6 +82,14 @@ app.App.addInitializer(function() {
             $(helpModal).modal('hide');
         })
     });
+    $('.playBtn').click(function() {
+        app.playback.initialize(function() {
+            gridCollectionView.play();
+        });
+    });
+    $('.stopBtn').click(function() {
+        gridCollectionView.stop();
+    });
 
     $('.modal').on('keypress', function(e) {
         console.log(e.keyCode);
