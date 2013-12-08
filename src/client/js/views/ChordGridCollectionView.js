@@ -13,6 +13,16 @@ app.ChordGridCollectionView = Marionette.CollectionView.extend({
 
     onRender: function() {
         this.$el.empty();
+        $(window).bind('resize', _.bind(this._resizeHandler, this));
+    },
+
+    onBeforeClose: function() {
+        $(window).unbind('resize');
+    },
+
+    _resizeHandler: function() {
+        this.$el.width($(window).width() - 50);
+        this.doZoom(1.0001);
     },
 
     buildItemView: function(item, ItemViewType, itemViewOptions) {
@@ -56,8 +66,8 @@ app.ChordGridCollectionView = Marionette.CollectionView.extend({
             var newScrollX = newFocusX - focalPoint.x;
             var newScrollY = newFocusY - focalPoint.y;
 
-            this.$el.parent().width(this._zoom * 918);
-            this.$el.parent().height(this._zoom * 1068);
+            this.$el.parent().width(this._zoom * this.$el.width());
+            //this.$el.parent().height(this._zoom * this.$el.height());
             window.scrollTo(newScrollX, newScrollY);
         }
         return false;
