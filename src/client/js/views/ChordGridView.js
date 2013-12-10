@@ -187,7 +187,8 @@ app.ChordGridView = Marionette.ItemView.extend({
     },
 
     _onClick: function(e) {
-        var n = this._nearest(e.offsetX, e.offsetY);
+        var offset = $(e.currentTarget).offset();
+        var n = this._nearest(e.clientX - offset.left, e.clientY - offset.top);
         var fret = n[0];
         var string = n[1];
 
