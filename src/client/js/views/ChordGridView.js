@@ -188,10 +188,13 @@ app.ChordGridView = Marionette.ItemView.extend({
 
     _onClick: function(e) {
         var offset = $(e.currentTarget).offset();
-        var n = this._nearest(e.clientX - offset.left, e.clientY - offset.top);
+        var $svg = this.$('svg');
+        var rect = $svg.get(0).getBoundingClientRect();
+        var clickX = (e.clientX - rect.left) * $svg.width() / rect.width;
+        var clickY = (e.clientY - rect.top) * $svg.height() / rect.height;
+        var n = this._nearest(clickX, clickY);
         var fret = n[0];
         var string = n[1];
-
         if (this.model.get('data')[fret][string]) {
             if (this.dataSVG[fret][string]) {
                 this.svgEl.removeChild(this.dataSVG[fret][string]);

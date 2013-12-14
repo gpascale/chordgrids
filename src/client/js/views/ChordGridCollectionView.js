@@ -6,7 +6,6 @@ app.ChordGridCollectionView = Marionette.CollectionView.extend({
     _zoom: 1,
     _playbackTimeout: null,
 
-
     initialize: function() {
         this.itemView = app.ChordGridView;
     },
