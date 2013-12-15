@@ -71,7 +71,7 @@ app.ChordGridCollectionView = Marionette.CollectionView.extend({
         newZoom = Math.max(0.25, Math.min(4, newZoom));
         if (this._zoom == newZoom)
             return;
-        var delta = newZoom / this.zoom;
+        var delta = newZoom / this._zoom;
         this._zoom = newZoom;
         $(this.el).css({ 
             '-webkit-transform': 'scale(' + this._zoom + ', ' + this._zoom + ')',
