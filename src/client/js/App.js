@@ -7,8 +7,7 @@ app.MainLayout = Marionette.Layout.extend({
     template: app.Templates.MainLayout,
     className: 'MainLayout',
     regions: {
-        header: '#headerRegion',
-        body: '#bodyRegion'
+        main: '#mainRegion'
     }
 });
 
@@ -18,9 +17,9 @@ app.App.addInitializer(function() {
     this.mainRegion.show(layout);
 
     // Basic layout - TODO move this into a region or some shit
-    var col = new app.ChordGridCollection();
-    var gridCollectionView = new app.ChordGridCollectionView({ collection: col }).render();
-    layout.body.show(gridCollectionView);
+    var page = new app.ChordGridPage();
+    var pageView = new app.ChordGridPageView({ model: page }).render();
+    layout.main.show(pageView);
 
     // Start off with a new page
     newPage();
@@ -30,7 +29,7 @@ app.App.addInitializer(function() {
         if (e.metaKey) {
             var delta = 1.0 + delta / 100;
             var focalPoint = { x: e.clientX, y: e.clientY };
-            gridCollectionView.doZoom(delta, focalPoint);
+            pageView.doZoom(delta, focalPoint);
             return false;
         }
     });
@@ -48,7 +47,7 @@ app.App.addInitializer(function() {
                 "data": [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]
             })
         ];
-        col.set(arr);
+        page.get('grids').set(arr);
     }
 
     function loadPage() {
@@ -66,7 +65,7 @@ app.App.addInitializer(function() {
         })
         function doLoad() {
             var str = popup.find('input').val();
-            col.load(str);
+            pageView.load(str);
             popup.modal('hide');
         }
     }
@@ -110,12 +109,14 @@ app.App.addInitializer(function() {
             gridCollectionView.stop();
         }
     });
+
+    /*
     gridCollectionView.on('playbackStarted', function() {
         $('.playBtn').removeClass('playBtn').addClass('stopBtn').text('Stop');
     });
     gridCollectionView.on('playbackStopped', function() {
         $('.stopBtn').removeClass('stopBtn').addClass('playBtn').text('Play');
-    });
+    });*/
 
     $('.modal').on('keypress', function(e) {
         console.log(e.keyCode);
