@@ -3,11 +3,24 @@ var app = window.ChordGrids = (window.ChordGrids || {});
 
 app.App = new Marionette.Application();
 
+app.MainLayout = Marionette.Layout.extend({
+    template: app.Templates.MainLayout,
+    className: 'MainLayout',
+    regions: {
+        header: '#headerRegion',
+        body: '#bodyRegion'
+    }
+});
+
 app.App.addInitializer(function() {
+    this.addRegions({ mainRegion: '#content' });
+    var layout = new app.MainLayout();
+    this.mainRegion.show(layout);
+
     // Basic layout - TODO move this into a region or some shit
     var col = new app.ChordGridCollection();
     var gridCollectionView = new app.ChordGridCollectionView({ collection: col }).render();
-    $('#content').append(gridCollectionView.$el);
+    layout.body.show(gridCollectionView);
 
     // Start off with a new page
     newPage();
@@ -118,9 +131,13 @@ app.App.addInitializer(function() {
         $('.loadDiv').find('input').val($(this).attr('data'));
     });
     
-
     function closePopup() {
         $('.popupOverlay').remove();
         $('.popupContainer').remove();
     }
+
+    $('.titleInput').on('keypress', function(e) {
+        if (e.keyCode == 13)
+            this.blur();
+    });
 });
