@@ -8,7 +8,8 @@ app.ChordGridView = Marionette.ItemView.extend({
         'click svg': '_onClick',
         'keypress input': '_onInputKeypress',
         'blur input': '_onInputBlur',
-        'click .deleteBtn': '_onDeleteBtnClick'
+        'click .deleteBtn': '_onDeleteBtnClick',
+        'click .insertBtn': '_onInsertBtnClick'
     },
     model: app.ChordGrid,
 
@@ -227,5 +228,9 @@ app.ChordGridView = Marionette.ItemView.extend({
 
     _onDeleteBtnClick: function(e) {
         this.model.destroy();
+    },
+
+    _onInsertBtnClick: function(e) {
+        this.trigger('insertAfter');
     }
 });

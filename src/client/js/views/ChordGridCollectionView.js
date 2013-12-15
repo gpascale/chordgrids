@@ -21,8 +21,9 @@ app.ChordGridCollectionView = Marionette.CollectionView.extend({
     },
 
     _resizeHandler: function() {
-        this.$el.width($(window).width() - 50);
-        this.doZoom(1.0001);
+        var zoom = $(window).width() / 1800;
+        this.setZoom(zoom);
+        return;
     },
 
     buildItemView: function(item, ItemViewType, itemViewOptions) {
@@ -39,38 +40,53 @@ app.ChordGridCollectionView = Marionette.CollectionView.extend({
         view.on('edited', function() {
             if (view.model.cid == self.collection.last().cid)
                 self.collection.add(new app.ChordGrid());
-        })
+        });
+        view.on('insertAfter', function() {
+            var index = self.collection.indexOf(this.model) + 1;
+            console.log("adding at index " + index);
+            self.collection.add(new app.ChordGrid(), { at: index });
+        });
         return view;
     },
 
+
     appendHtml: function(collectionView, itemView, index) {
-        this.el.appendChild(itemView.el);
+        if (index <= 0)
+            collectionView.$el.prepend(itemView.el);
+        else if (index < collectionView.$el.children().length)
+            collectionView.$('.chordGridView:nth-child(' + (index + 1) + ')').before(itemView.el);
+        else
+            collectionView.$el.append(itemView.el);
     },
 
     doZoom: function(delta, focalPoint) {
-        if (!focalPoint)
-            focalPoint = { x: 450, y: 550 };
-
-        var newZoom = Math.max(0.25, Math.min(4, this._zoom * delta));
-        if (newZoom != this._zoom) {
-            this._zoom = newZoom;
-            $(this.el).css({ 
-                '-webkit-transform': 'scale(' + this._zoom + ', ' + this._zoom + ')',
-                '-webkit-transform-origin': '0 0',
-                '-webkit-transform-style': 'flat' });
-
-            var focusX = window.scrollX + focalPoint.x;
-            var focusY = window.scrollY + focalPoint.y;
-            var newFocusX = focusX * delta;
-            var newFocusY = focusY * delta;
-            var newScrollX = newFocusX - focalPoint.x;
-            var newScrollY = newFocusY - focalPoint.y;
-
-            this.$el.parent().width(this._zoom * this.$el.width());
-            //this.$el.parent().height(this._zoom * this.$el.height());
-            window.scrollTo(newScrollX, newScrollY);
-        }
+        this.setZoom(this._zoom * delta, focalPoint);
         return false;
+    },
+
+    setZoom: function(newZoom, focalPoint) {
+        if (!focalPoint)
+            focalPoint = { x: 900, y: 0 };
+        console.log('setZoom ' + newZoom + '   focal point ' + focalPoint.x + ' ' + focalPoint.y);
+        newZoom = Math.max(0.25, Math.min(4, newZoom));
+        if (this._zoom == newZoom)
+            return;
+        var delta = newZoom / this.zoom;
+        this._zoom = newZoom;
+        $(this.el).css({ 
+            '-webkit-transform': 'scale(' + this._zoom + ', ' + this._zoom + ')',
+            '-webkit-transform-origin': '0 0',
+            '-webkit-transform-style': 'flat' });
+
+        var focusX = window.scrollX + focalPoint.x;
+        var focusY = window.scrollY + focalPoint.y;
+        var newFocusX = focusX * delta;
+        var newFocusY = focusY * delta;
+        var newScrollX = newFocusX - focalPoint.x;
+        var newScrollY = newFocusY - focalPoint.y;
+
+        this.$el.parent().width(this._zoom * this.$el.width());
+        window.scrollTo(newScrollX, newScrollY);
     },
 
     play: function() {
