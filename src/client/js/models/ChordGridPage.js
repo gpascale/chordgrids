@@ -19,6 +19,7 @@ app.ChordGridPage = Backbone.Model.extend({
                 res.grids.push(model.encode());
         });
         res.version = fileVersion;
+        // TODO - this should probably be in the PageView or something
         res.title = $('.titleInput').val();
         return JSON.stringify(res);
     },
