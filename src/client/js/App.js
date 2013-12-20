@@ -18,7 +18,7 @@ app.App.addInitializer(function() {
 
     // Basic layout - TODO move this into a region or some shit
     var page = new app.ChordGridPage();
-    var pageView = new app.ChordGridPageView({ model: page }).render();
+    var pageView = new app.ChordGridPageView({ model: page });
     layout.main.show(pageView);
 
     // Start off with a new page
@@ -54,17 +54,24 @@ app.App.addInitializer(function() {
         var loadModal = app.Templates.LoadModal();
         var popup = $(loadModal);
         popup.modal('show');
-        popup.on('click', '.loadPopupLoadBtn', doLoad);
-        popup.on('keypress', 'input', function(e) {
-            if (e.keyCode == 13)
-                doLoad();
+        popup.on('click', '.loadPopupLoadFileBtn', function() {
+            var $hiddenFileInput = $('#fileUploadInput');
+            $hiddenFileInput.on('change', function() {
+                var reader = new FileReader();
+                reader.onload = function() {
+                    doLoad(reader.result);
+                    // TODO: handle failure
+                };
+                reader.readAsText(this.files[0]);
+                return false;
+            });
+            $hiddenFileInput.click();
+        });
+        popup.on('click', '.loadModalExample a', function() {
+            doLoad($(this).attr('data'));
+            return false;
         })
-        popup.on('click', 'a', function() {
-            popup.find('input').val($(this).attr('data'));
-            doLoad();
-        })
-        function doLoad() {
-            var str = popup.find('input').val();
+        function doLoad(str) {
             pageView.load(str);
             popup.modal('hide');
         }
@@ -73,9 +80,16 @@ app.App.addInitializer(function() {
     function savePage() {
         var str = page.save();
         console.log(str);
-        var saveModal = app.Templates.SaveModal({ data: str });
-        var popup = $(saveModal);
-        popup.modal('show');
+
+        var a = document.createElement('a');
+        var title = page.get('title') || '';
+        title = title.replace(/\/\\/g, '_');
+        a.setAttribute('download', title + '.cgpage');
+        a.href = "data:text/plain;charset=utf-8;base64," + window.btoa(str);
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
     }
 
     $('.newBtn').click(function() {
@@ -101,22 +115,21 @@ app.App.addInitializer(function() {
         if ($this.hasClass('playBtn')) {
             $this.addClass('disabled');
             app.playback.initialize(function() {
-                gridCollectionView.play();
+                pageView.play();
                 $this.removeClass('disabled');
             });
         }
         else {
-            gridCollectionView.stop();
+            pageView.stop();
         }
     });
 
-    /*
-    gridCollectionView.on('playbackStarted', function() {
+    pageView.on('playbackStarted', function() {
         $('.playBtn').removeClass('playBtn').addClass('stopBtn').text('Stop');
     });
-    gridCollectionView.on('playbackStopped', function() {
+    pageView.on('playbackStopped', function() {
         $('.stopBtn').removeClass('stopBtn').addClass('playBtn').text('Play');
-    });*/
+    });
 
     $('.modal').on('keypress', function(e) {
         console.log(e.keyCode);
@@ -136,9 +149,4 @@ app.App.addInitializer(function() {
         $('.popupOverlay').remove();
         $('.popupContainer').remove();
     }
-
-    $('.titleInput').on('keypress', function(e) {
-        if (e.keyCode == 13)
-            this.blur();
-    });
 });

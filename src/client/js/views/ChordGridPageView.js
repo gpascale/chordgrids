@@ -4,17 +4,25 @@ app.ChordGridPageView = Marionette.ItemView.extend({
     template: app.Templates.ChordGridPageView,
     className: 'chordGridPageView',
     model: app.ChordGridPage,
-
-    initialize: function(params) {
-
+    events: {
+        'keypress input': '_onInputKeypress'
     },
 
     onRender: function() {
+        var self = this;
+
         this.$('.chordGridPageHeader .titleInput').val(this.model.get('title'));
 
         var grids = this.options.model.get('grids');
         this._collectionView = new app.ChordGridCollectionView({ collection: grids });
         this.$('.chordGridPageBody').append(this._collectionView.render().$el);
+
+        this._collectionView.on('playbackStarted', function() {
+            self.trigger('playbackStarted');
+        });
+        this._collectionView.on('playbackStopped', function() {
+            self.trigger('playbackStopped');
+        });
 
         $(window).bind('resize', _.bind(this._resizeHandler, this));
         this._resizeHandler();
@@ -22,12 +30,22 @@ app.ChordGridPageView = Marionette.ItemView.extend({
 
     onBeforeClose: function() {
         $(window).unbind('resize');
+        this._collectionView.off('playbackStarted');
+        this._collectionView.off('playbackStopped');
     },
 
     _resizeHandler: function() {
         var zoom = $(window).width() / 1800;
         this.setZoom(zoom);
         return;
+    },
+
+    play: function() {
+        this._collectionView.play();
+    },
+
+    stop: function() {
+        this._collectionView.stop();
     },
 
     load: function(str) {
@@ -63,5 +81,13 @@ app.ChordGridPageView = Marionette.ItemView.extend({
 
         this.$el.parent().width(this._zoom * this.$el.width());
         window.scrollTo(newScrollX, newScrollY);
+    },
+
+    _onInputKeypress: function(e) {
+        if (e.keyCode == 13) {
+            this.model.set('title', this.$('.titleInput').val());
+            $(e.currentTarget).blur();
+            return false;
+        }
     }
 });
