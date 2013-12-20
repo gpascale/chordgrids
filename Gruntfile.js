@@ -95,8 +95,15 @@ module.exports = function(grunt) {
                    'public/ext/js/backbone.marionette.min.js',
                    'public/ext/js/Base64.js',
                    'public/ext/js/base64binary.js',
-                   'public/ext/js/MIDI.min.js' ],
-            dest: 'public/js/deps.js'
+                   'public/ext/js/MIDI.min.js',
+                   'public/ext/js/jspdf.min.js',
+                   'public/ext/js/jspdf.plugin.from_html.js',
+                   'public/ext/js/html2canvas.js',
+                   'public/ext/js/canvg.js' ],
+            dest: 'public/js/deps.js',
+            options: {
+                separator: ';\n'
+            }
         },
         js: {
             src: ['public/js/templates.js', 'src/client/js/**/*.js'],

@@ -26,7 +26,7 @@ app.ChordGridPageView = Marionette.ItemView.extend({
 
     _resizeHandler: function() {
         var zoom = $(window).width() / 1800;
-        this.setZoom(zoom);
+        this.setZoom(1.0);
         return;
     },
 

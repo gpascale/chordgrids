@@ -109,6 +109,57 @@ app.App.addInitializer(function() {
             gridCollectionView.stop();
         }
     });
+    $('.printBtn').click(function() {
+        var content = $('#content').clone();
+        content.find('svg').each(function(idx, svg){
+            var $svg = $(svg);
+            var svgText = $svg.eq(0).parent().html();
+            var start = svgText.indexOf('<svg');
+            var end = svgText.lastIndexOf('</svg>') + 6;
+            svgText = svgText.slice(start, end);
+
+            var canvas = $('<canvas></canvas>')[0];
+            //canvas.style.cssText = document.defaultView.getComputedStyle(svg, "").cssText;
+            canvg(canvas, svgText);
+            $svg.replaceWith($(canvas));
+        });
+
+        document.body.appendChild(content[0]);
+
+        setTimeout(function() {
+            html2canvas(content, {
+                onrendered: function(canvas) {
+                    document.body.removeChild(content[0]);
+                    document.body.appendChild(canvas);
+                    var canvas2 = $('<canvas></canvas>').css({width: 1800, height: 1200})[0];
+                    var tCtx = canvas2.getContext("2d");
+                    tCtx.drawImage(canvas, 0, 0, 1800, 1200);
+                    var imgData = canvas2.toDataURL("image/png");
+                    //var doc = new jsPDF();
+                    //doc.addImage(imgData, 'JPEG', 0, 0, 1024, 768);
+                    //doc.save();
+                    //document.body.removeChild(canvas);
+                    var img = new Image;
+                    img.src = imgData; // Assume valid data
+                    document.body.appendChild(img);
+                },
+            });
+        });
+        
+        //
+
+        
+                
+                /*var doc = new jsPDF('p', 'in', 'letter');
+                var body = $('#content').get(0);
+                doc.fromHTML(body, 0.5, 0.5, { 
+                    'width': 7.5,
+                    'elementHandlers': { }
+                });
+                doc.save();*/
+        //    }
+        //});
+    })
 
     /*
     gridCollectionView.on('playbackStarted', function() {
