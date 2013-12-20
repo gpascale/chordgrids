@@ -71,7 +71,7 @@ app.App.addInitializer(function() {
     }
 
     function savePage() {
-        var str = col.save('update');
+        var str = page.save();
         console.log(str);
         var saveModal = app.Templates.SaveModal({ data: str });
         var popup = $(saveModal);
