@@ -14,6 +14,7 @@ app.ChordGridView = Marionette.ItemView.extend({
     model: app.ChordGrid,
 
     initialize: function(params) {
+        this.numFrets = 6;
         this.fretWidth = 4;
         this.stringWidth = 2;
         this.stringSpacing = 19;
@@ -21,8 +22,10 @@ app.ChordGridView = Marionette.ItemView.extend({
         this.symbolR = 9;
         this.padding = { left: 10, top: 5, right: 10, bottom: 5 };
         this.width = this.padding.left + this.padding.right + this.stringWidth + 5 * (this.stringSpacing + this.stringWidth);
-        this.height = this.padding.top + this.padding.bottom + this.fretWidth + 5 * (this.fretSpacing + this.fretWidth);
-        this.dataSVG = [ [], [], [], [], [], [] ];
+        this.height = this.padding.top + this.padding.bottom + this.fretWidth + this.numFrets * (this.fretSpacing + this.fretWidth);
+        this.dataSVG = [ ];
+        for (var i = 0; i < this.numFrets + 1; ++i)
+            this.dataSVG.push([]);
         this.x = 0;
         this.y = 0;
         this.$el.addClass('unedited');
@@ -36,7 +39,7 @@ app.ChordGridView = Marionette.ItemView.extend({
     _nearest: function(x, y) {
         var nearestFret = -1;
         var nearestFretDist = 100000;
-        for (var i = 1; i < 6; ++i) {
+        for (var i = 1; i < this.numFrets + 1; ++i) {
             var dist = Math.abs(y - (this._coords(i, 0)[1]));
             if (dist < nearestFretDist) {
                 nearestFretDist = dist;
@@ -71,7 +74,7 @@ app.ChordGridView = Marionette.ItemView.extend({
         this.svgEl.appendChild(background);
 
         // Frets
-        for (var i = 0; i < 6; ++i) {
+        for (var i = 0; i < this.numFrets + 1; ++i) {
             var fret = app.common.makeSVG('line', {
                 x1: this.padding.left,
                 x2: this.width - this.padding.right,
@@ -100,7 +103,7 @@ app.ChordGridView = Marionette.ItemView.extend({
         this.$('.chordName').val(this.model.get('name'));
         this.$('.fretNumber').val(this.model.get('fret'));
         var data = this.model.get('data');
-        for (var fret = 0; fret < 6; ++fret) {
+        for (var fret = 0; fret < this.numFrets + 1; ++fret) {
             for (var string = 0; string < 6; ++string) {
                 if (data[fret][string])
                     this.setSymbol(fret, string, data[fret][string]);
@@ -175,7 +178,8 @@ app.ChordGridView = Marionette.ItemView.extend({
                 var points = [ c[0] - this.symbolR, c[1] + this.symbolR,
                                c[0], c[1] - this.symbolR,
                                c[0] + this.symbolR, c[1] + this.symbolR,
-                               c[0] - this.symbolR, c[1] + this.symbolR ].toString();
+                               c[0] - this.symbolR, c[1] + this.symbolR,
+                               c[0], c[1] - this.symbolR ].toString();
                 var tri = app.common.makeSVG('polyline', {
                     points: points,
                     fill: 'none',
