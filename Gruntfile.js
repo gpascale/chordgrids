@@ -51,7 +51,7 @@ module.exports = function(grunt) {
             expand: true,
             cwd: 'src',
             src: 'CNAME',
-            dest: 'public/CNAME'
+            dest: 'public/'
         }
     });
 
