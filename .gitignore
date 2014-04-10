@@ -2,3 +2,4 @@ public/
 *.sublime-project
 *.sublime-workspace
 .DS_Store
+.grunt
