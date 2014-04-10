@@ -39,7 +39,7 @@ app.ChordGridView = Marionette.ItemView.extend({
     _nearest: function(x, y) {
         var nearestFret = -1;
         var nearestFretDist = 100000;
-        for (var i = 1; i < this.numFrets + 1; ++i) {
+        for (var i = 0; i < this.numFrets + 1; ++i) {
             var dist = Math.abs(y - (this._coords(i, 0)[1]));
             if (dist < nearestFretDist) {
                 nearestFretDist = dist;
