@@ -1,0 +1,36 @@
+<html>
+
+	<head>
+    <!-- css -->
+    <link href="css/deps.css" rel="stylesheet" type="text/css">
+	<link href="css/chordgrids.css" rel="stylesheet" type="text/css">
+    <!-- js -->
+    <script src="js/deps.js"></script>
+    <script src="js/chordgrids.js"></script>
+	</head>
+
+    <body>
+        <!-- TODO - make this all a Marionette region/layout/whatever -->
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="#">Chord Grids!</a>
+                <ul class="nav">
+                    <li><a href="#" class="newBtn">New</a></li>
+                    <li><a href="#" class="saveBtn">Save</a></li>
+                    <li><a href="#" class="loadBtn">Load</a></li>
+                    <li><a href="#" class="helpBtn">Help</a></li>
+                    <li><a href="#" class="playBtn">Play</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="content">
+        </div>
+        <input type="file" id="fileUploadInput" accept="cgpage" style="display:none">
+	</body>
+
+    <script>
+        $(document).ready(function() {
+            window.ChordGrids.App.start();
+        });
+    </script>
+</html>
