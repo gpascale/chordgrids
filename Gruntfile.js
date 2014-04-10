@@ -50,6 +50,12 @@ module.exports = function(grunt) {
             cwd: 'src/client/ext',
             src: '**',
             dest: 'public/ext'
+        },
+        cname: {
+            expand: true,
+            cwd: 'src',
+            src: 'CNAME',
+            dest: 'public/CNAME'
         }
     });
 
@@ -153,6 +159,18 @@ module.exports = function(grunt) {
             }
         }
     });
+
+    /*************************************************************************/
+    // Github Pages                                                           
+    /*************************************************************************/
+
+    grunt.loadNpmTasks('grunt-gh-pages');
+    grunt.config('gh-pages', {
+        options: {
+            base: 'public'
+        },
+        src: ['**']
+    });
 
     grunt.registerTask('default', [ 'clean', 'less', 'copy', 'jst', 'concat' ]);
 };
