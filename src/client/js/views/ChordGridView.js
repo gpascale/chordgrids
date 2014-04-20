@@ -12,6 +12,7 @@ app.ChordGridView = Marionette.ItemView.extend({
         'click .insertBtn': '_onInsertBtnClick'
     },
     model: app.ChordGrid,
+    modifiers: [ false, false, false ],
 
     initialize: function(params) {
         this.numFrets = 6;
@@ -105,7 +106,7 @@ app.ChordGridView = Marionette.ItemView.extend({
         var data = this.model.get('data');
         for (var fret = 0; fret < this.numFrets + 1; ++fret) {
             for (var string = 0; string < 6; ++string) {
-                if (data[fret][string])
+                if (this.model.hasSymbol(fret, string))
                     this.setSymbol(fret, string, data[fret][string]);
             }
         }
@@ -126,69 +127,71 @@ app.ChordGridView = Marionette.ItemView.extend({
         this.$el.removeClass('unedited');
     },
 
-    _createSymbol: function(type, c) {
-        switch (type) {
-            case app.Symbol.None: default:
-                return null;
-            case 1: {
-                var dot = app.common.makeSVG('circle', {
-                    cx: c[0],
-                    cy: c[1],
-                    r: this.fretSpacing / 3,
-                    fill: 'rgb(0, 0, 0)'
-                });
-                return dot;
-            }
-            case 2: {
-                var r = this.fretSpacing * (15 / 60);
-                var l1 = app.common.makeSVG('line', {
-                    x1: c[0] - this.symbolR,
-                    x2: c[0] + this.symbolR,
-                    y1: c[1] - this.symbolR,
-                    y2: c[1] + this.symbolR,
-                    stroke: 'rgb(0, 0, 0)',
-                    'stroke-width': this.fretSpacing / 8
-                });
-                var l2 = app.common.makeSVG('line', {
-                    x1: c[0] - this.symbolR,
-                    x2: c[0] + this.symbolR,
-                    y1: c[1] + this.symbolR,
-                    y2: c[1] - this.symbolR,
-                    stroke: 'rgb(0, 0, 0)',
-                    'stroke-width': this.fretSpacing / 8
-                });
-                var x = app.common.makeSVG('g');
-                x.appendChild(l1);
-                x.appendChild(l2);
-                return x;
-            }
-            case 3: {
-                var rect = app.common.makeSVG('rect', {
-                    width: 2 * this.symbolR,
-                    height: 2 * this.symbolR,
-                    x: c[0] - this.symbolR,
-                    y: c[1] - this.symbolR,
-                    fill: 'transparent',
-                    stroke: 'rgb(0, 0, 0)',
-                    'stroke-width': this.fretSpacing / 8
-                });
-                return rect;
-            }
-            case 4: {
-                var points = [ c[0] - this.symbolR, c[1] + this.symbolR,
-                               c[0], c[1] - this.symbolR,
-                               c[0] + this.symbolR, c[1] + this.symbolR,
-                               c[0] - this.symbolR, c[1] + this.symbolR,
-                               c[0], c[1] - this.symbolR ].toString();
-                var tri = app.common.makeSVG('polyline', {
-                    points: points,
-                    fill: 'none',
-                    stroke: 'rgb(0, 0, 0)',
-                    'stroke-width': this.fretSpacing / 8
-                });
-                return tri;
-            }
+    _createSymbol: function(symbolData, c) {
+        var g = app.common.makeSVG('g');
+        if (symbolData[app.Symbol.Circle]) {
+            var r = this.symbolR * 0.9;
+            var dot = app.common.makeSVG('circle', {
+                cx: c[0],
+                cy: c[1],
+                r: r,
+                fill: 'rgb(0, 0, 0)'
+            });
+            g.appendChild(dot);
         }
+        if (symbolData[app.Symbol.X]) {
+            var r = 1.2 * this.symbolR;
+            var l1 = app.common.makeSVG('line', {
+                x1: c[0] - r,
+                x2: c[0] + r,
+                y1: c[1] - r,
+                y2: c[1] + r,
+                stroke: 'rgb(0, 0, 0)',
+                'stroke-width': this.fretSpacing / 8
+            });
+            var l2 = app.common.makeSVG('line', {
+                x1: c[0] - r,
+                x2: c[0] + r,
+                y1: c[1] + r,
+                y2: c[1] - r,
+                stroke: 'rgb(0, 0, 0)',
+                'stroke-width': this.fretSpacing / 8
+            });
+            var x = app.common.makeSVG('g');
+            x.appendChild(l1);
+            x.appendChild(l2);
+            g.appendChild(x);
+        }
+        if (symbolData[app.Symbol.Square]) {
+            var d = 2.4 * this.symbolR;
+            var rect = app.common.makeSVG('rect', {
+                width: d,
+                height: d,
+                x: c[0] - (d * 0.5),
+                y: c[1] - (d * 0.5),
+                fill: 'transparent',
+                stroke: 'rgb(0, 0, 0)',
+                'stroke-width': this.fretSpacing / 8
+            });
+            g.appendChild(rect);
+        }
+        if (symbolData[app.Symbol.Triangle]) {
+            var r = 1.2 * this.symbolR;
+            var points = [ c[0] - r, c[1] + r,
+                           c[0], c[1] - r,
+                           c[0] + r, c[1] + r,
+                           c[0] - r, c[1] + r,
+                           c[0], c[1] - r ].toString();
+            var tri = app.common.makeSVG('polyline', {
+                points: points,
+                fill: 'none',
+                stroke: 'rgb(0, 0, 0)',
+                'stroke-width': this.fretSpacing / 8
+            });
+            g.appendChild(tri);
+        }
+
+        return g;
     },
 
     _onClick: function(e) {
@@ -207,11 +210,27 @@ app.ChordGridView = Marionette.ItemView.extend({
             }
         }
 
-        var symbol = (this.model.get('data')[fret][string] + 1 + 5) % 5;
-        this.setSymbol(fret, string, symbol);
+        var symbolData = (this.model.get('data')[fret][string]);
+        var symbol = app.currentSymbol;
+        if (!symbolData[symbol])
+            symbolData[symbol] = 1;
+        else
+            delete symbolData[symbol];
+
+        this.setSymbol(fret, string, symbolData);
         this.trigger('edited');
         this.$el.removeClass('unedited');
         return false;
+    },
+
+    _onInputKeydown: function(e) {
+        if (e.keyCode == 27)
+            modifiers[0] = true;
+    },
+
+    _onInputKeyup: function(e) {
+        if (e.keyCode == 27)
+            modifiers[0] = true;
     },
 
     _onInputKeypress: function(e) {

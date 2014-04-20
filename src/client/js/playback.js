@@ -30,20 +30,25 @@ app.playback = {
 		var data = chordGrid.get('data');
 		var capo = chordGrid.get('fret') - 1;
 
-		var maxSymbol = 0;
+		var maxSymbol = -1;
 		for (var string = 0; string < 6; ++string)
 			for (var fret = 0; fret < 6; ++fret)
-				if (data[fret][string] > maxSymbol)
-					maxSymbol = data[fret][string];
-		var mult = 1 / maxSymbol;
+				for (var sym = maxSymbol + 1; sym < app.Symbol.Count; ++sym)
+					if (data[fret][string][sym])
+						maxSymbol = sym;
+		var mult = 1 / (maxSymbol + 1);
+
+		console.log('maxSymbol = ' + maxSymbol);
 
 		for (var string = 0; string < 6; ++string) {
 			for (var fret = 0; fret < 6; ++fret) {
-				if (data[fret][string]) {
-					var note = this._getNote(capo + fret, string);
-					MIDI.setVolume(string, 127);
-					MIDI.noteOn(string, note, 127, mult * (data[fret][string] - 1));
-					MIDI.noteOff(string, note, .9);
+				for (var sym = app.Symbol.Circle; sym < app.Symbol.Count; ++sym) {
+					if (data[fret][string][sym]) {
+						var note = this._getNote(capo + fret, string);
+						MIDI.setVolume(string, 127);
+						MIDI.noteOn(string, note, 127, mult * (sym));
+						MIDI.noteOff(string, note, .9);
+					}
 				}
 			}
 		}

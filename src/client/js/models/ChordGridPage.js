@@ -1,6 +1,6 @@
 var app = window.ChordGrids = (window.ChordGrids || {});
 
-var fileVersion = 1;
+var fileVersion = 2;
 
 app.ChordGridPage = Backbone.Model.extend({
     defaults: function() {
@@ -32,11 +32,22 @@ app.ChordGridPage = Backbone.Model.extend({
 
     loadVersioned: function(json, version) {
         switch (version) {
-            case 1: {
+            case 2:
                 var m = [ ];
                 for (var i = 0; i < json.grids.length; ++i) {
                     var data = json.grids[i];
                     var model = new app.ChordGrid().decode(data);
+                    m.push(model);
+                }
+                m.push(new app.ChordGrid());
+                this.set('title', json.title || '');
+                this.get('grids').set(m);
+                break;
+            case 1: {
+                var m = [ ];
+                for (var i = 0; i < json.grids.length; ++i) {
+                    var data = json.grids[i];
+                    var model = new app.ChordGrid().decodeOld(data);
                     m.push(model);
                 }
                 m.push(new app.ChordGrid());
@@ -51,7 +62,7 @@ app.ChordGridPage = Backbone.Model.extend({
                 var m = [ ];
                 for (var i = 0; i < json.length; ++i) {
                     var data = json[i];
-                    var model = new app.ChordGrid().decode(data);
+                    var model = new app.ChordGrid().decodeOld(data);
                     m.push(model);
                 }
                 m.push(new app.ChordGrid());

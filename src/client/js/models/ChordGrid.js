@@ -1,11 +1,27 @@
 var app = window.ChordGrids = (window.ChordGrids || {});
 
 app.Symbol = {
-    None: 0,
-    Circle: 1,
-    X: 2,
-    Square: 3,
-    Triangle: 4
+    Circle: 0,
+    X: 1,
+    Square: 2,
+    Triangle: 3,
+    Count: 4
+}
+
+function encodeDatum(datum) {
+    var num = 0;
+    for (var i = app.Symbol.Circle; i < app.Symbol.Count; ++i)
+        num |= (datum[i] << i);
+    return '0123456789ABCDEF'[num];
+}
+
+function decodeDatum(symbol) {
+    var datum = { };
+    var num = '0123456789ABCDEF'.indexOf(symbol);
+    for (var i = app.Symbol.Circle; i < app.Symbol.Count; ++i)
+        if (num & (1 << i))
+            datum[i] = 1;
+    return datum;
 }
 
 app.ChordGrid = Backbone.Model.extend({
@@ -14,15 +30,23 @@ app.ChordGrid = Backbone.Model.extend({
             name: '',
             fret: 1,
             data: [
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0]
+                [{ }, { }, { }, { }, { }, { }],
+                [{ }, { }, { }, { }, { }, { }],
+                [{ }, { }, { }, { }, { }, { }],
+                [{ }, { }, { }, { }, { }, { }],
+                [{ }, { }, { }, { }, { }, { }],
+                [{ }, { }, { }, { }, { }, { }],
+                [{ }, { }, { }, { }, { }, { }]
             ]
         };
+    },
+
+    hasSymbol: function(fret, string) {
+        var datum = this.get('data')[fret][string];
+        return datum[app.Symbol.Circle] ||
+               datum[app.Symbol.X] ||
+               datum[app.Symbol.Square] ||
+               datum[app.Symbol.Triangle];
     },
 
     encode: function() {
@@ -37,8 +61,8 @@ app.ChordGrid = Backbone.Model.extend({
         ret.d = '';
         for (var fret = 0; fret < 6; ++fret) {
             for (var string = 0; string < 6; ++string) {
-                if (data[fret][string] != 0)
-                    ret.d += fret + '' + string + '' + data[fret][string];
+                if (this.hasSymbol(fret, string))
+                    ret.d += fret + '' + string + '' + encodeDatum(data[fret][string]);
             }
         }
         if (ret.d == '')
@@ -57,8 +81,28 @@ app.ChordGrid = Backbone.Model.extend({
             var s = d.substr(0, 3);
             var fret = d[0] - '0';
             var string = d[1] - '0';
-            var val = d[2] - '0';
-            data[fret][string] = val;
+            var val = d[2];
+            data[fret][string] = decodeDatum(val);
+            d = d.substr(3);
+        }
+        this.set('data', data);
+        return this;
+    },
+
+    decodeOld: function(encoded) {
+        this.set('name', encoded.n || '');
+        this.set('fret', encoded.f || 1);
+        var data = this.defaults().data;
+        var d = encoded.d;
+        while(d && d.length >= 3) {
+            var s = d.substr(0, 3);
+            var fret = d[0] - '0';
+            var string = d[1] - '0';
+            var val = d[2] - '0' - 1;
+            var datum = { };
+            if (val >= 0)
+            datum[val] = 1;
+            data[fret][string] = datum;
             d = d.substr(3);
         }
         this.set('data', data);

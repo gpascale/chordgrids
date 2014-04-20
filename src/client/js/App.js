@@ -35,19 +35,13 @@ app.App.addInitializer(function() {
     });
 
     function newPage() {
-        var arr = [ 
-            new app.ChordGrid({ 
-                "name": "G Maj",
-                "fret": 7,
-                "data": [[0,0,0,0,0,0],[0,0,0,1,0,1],[0,0,0,0,1,0],[0,0,1,0,0,0],[0,1,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]
-            }),
+        var arr = [
             new app.ChordGrid({ 
                 "name": "",
                 "fret": 1,
-                "data": [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]
             })
         ];
-        page.get('grids').set(arr);
+        //page.get('grids').set(arr);
     }
 
     function loadPage() {
@@ -148,5 +142,13 @@ app.App.addInitializer(function() {
     function closePopup() {
         $('.popupOverlay').remove();
         $('.popupContainer').remove();
+    }
+});
+
+app.currentSymbol = 0;
+$(document).on('keypress', function(e) {
+    if (e.keyCode >= 49 && e.keyCode <= 52) {
+        app.currentSymbol = app.Symbol.Circle + (e.keyCode - 49);
+        console.log('current symbol: ' + app.currentSymbol);
     }
 });

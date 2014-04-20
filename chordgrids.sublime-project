@@ -3,7 +3,7 @@
 	[
 		{
 			"path": ".",
-			"folder_exclude_patterns": ["public", "node_modules"],
+			"folder_exclude_patterns": ["public", "node_modules", ".grunt"],
             "file_exclude_patterns": ["*.sublime-workspace"]
 		}
 	]
