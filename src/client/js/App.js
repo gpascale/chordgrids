@@ -41,7 +41,7 @@ app.App.addInitializer(function() {
                 "fret": 1,
             })
         ];
-        //page.get('grids').set(arr);
+        page.get('grids').set(arr);
     }
 
     function loadPage() {
@@ -143,12 +143,36 @@ app.App.addInitializer(function() {
         $('.popupOverlay').remove();
         $('.popupContainer').remove();
     }
+
+    for (var i = 0; i < app.Symbol.Count; ++i) {
+        var svg = app.common.makeSVG('svg');
+        svg.appendChild(app.common.createSymbol(i, [10, 10], 8));
+        var content = $('<div/>')
+                .addClass('symbolDropdownEntry')
+                .append(svg)
+                .append($('<span> (' + i + ') </span>'));
+        $('.nav .dropdown-menu').append($('<li/>').append($('<a href="#"/>').append(content)));
+    }
+
+    $('.nav .dropdown-menu li a').on('click', function(e) {
+        var idx = $(this).parent().index();
+        var svg = app.common.makeSVG('svg');
+        svg.appendChild(app.common.createSymbol(idx, [10, 10], 8));
+        var content = $('<div/>')
+                .addClass('symbolDropdownEntry')
+                .append('<span>Current: </span>')
+                .append(svg);
+        $('.nav .dropdown-toggle span').html(content);
+        app.currentSymbol = idx;
+        console.log('current symbol: ' + app.currentSymbol);
+    })
+
+    $($('.nav .dropdown-menu').children()[0]).find('a').trigger('click');
 });
 
 app.currentSymbol = 0;
 $(document).on('keypress', function(e) {
     if (e.keyCode >= 49 && e.keyCode <= 52) {
-        app.currentSymbol = app.Symbol.Circle + (e.keyCode - 49);
-        console.log('current symbol: ' + app.currentSymbol);
+        $($('.nav .dropdown-menu').children()[e.keyCode - 49]).find('a').trigger('click');
     }
 });

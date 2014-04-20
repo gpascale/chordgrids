@@ -130,67 +130,17 @@ app.ChordGridView = Marionette.ItemView.extend({
     _createSymbol: function(symbolData, c) {
         var g = app.common.makeSVG('g');
         if (symbolData[app.Symbol.Circle]) {
-            var r = this.symbolR * 0.9;
-            var dot = app.common.makeSVG('circle', {
-                cx: c[0],
-                cy: c[1],
-                r: r,
-                fill: 'rgb(0, 0, 0)'
-            });
-            g.appendChild(dot);
+            g.appendChild(app.common.createSymbol(app.Symbol.Circle, c, this.symbolR * 0.9));
         }
         if (symbolData[app.Symbol.X]) {
-            var r = 1.2 * this.symbolR;
-            var l1 = app.common.makeSVG('line', {
-                x1: c[0] - r,
-                x2: c[0] + r,
-                y1: c[1] - r,
-                y2: c[1] + r,
-                stroke: 'rgb(0, 0, 0)',
-                'stroke-width': this.fretSpacing / 8
-            });
-            var l2 = app.common.makeSVG('line', {
-                x1: c[0] - r,
-                x2: c[0] + r,
-                y1: c[1] + r,
-                y2: c[1] - r,
-                stroke: 'rgb(0, 0, 0)',
-                'stroke-width': this.fretSpacing / 8
-            });
-            var x = app.common.makeSVG('g');
-            x.appendChild(l1);
-            x.appendChild(l2);
-            g.appendChild(x);
+            g.appendChild(app.common.createSymbol(app.Symbol.X, c, this.symbolR * 1.2));
         }
         if (symbolData[app.Symbol.Square]) {
-            var d = 2.4 * this.symbolR;
-            var rect = app.common.makeSVG('rect', {
-                width: d,
-                height: d,
-                x: c[0] - (d * 0.5),
-                y: c[1] - (d * 0.5),
-                fill: 'transparent',
-                stroke: 'rgb(0, 0, 0)',
-                'stroke-width': this.fretSpacing / 8
-            });
-            g.appendChild(rect);
+            g.appendChild(app.common.createSymbol(app.Symbol.Square, c, this.symbolR * 1.2))
         }
         if (symbolData[app.Symbol.Triangle]) {
-            var r = 1.2 * this.symbolR;
-            var points = [ c[0] - r, c[1] + r,
-                           c[0], c[1] - r,
-                           c[0] + r, c[1] + r,
-                           c[0] - r, c[1] + r,
-                           c[0], c[1] - r ].toString();
-            var tri = app.common.makeSVG('polyline', {
-                points: points,
-                fill: 'none',
-                stroke: 'rgb(0, 0, 0)',
-                'stroke-width': this.fretSpacing / 8
-            });
-            g.appendChild(tri);
+            g.appendChild(app.common.createSymbol(app.Symbol.Triangle, c, this.symbolR * 1.2));
         }
-
         return g;
     },
 
@@ -221,16 +171,6 @@ app.ChordGridView = Marionette.ItemView.extend({
         this.trigger('edited');
         this.$el.removeClass('unedited');
         return false;
-    },
-
-    _onInputKeydown: function(e) {
-        if (e.keyCode == 27)
-            modifiers[0] = true;
-    },
-
-    _onInputKeyup: function(e) {
-        if (e.keyCode == 27)
-            modifiers[0] = true;
     },
 
     _onInputKeypress: function(e) {
