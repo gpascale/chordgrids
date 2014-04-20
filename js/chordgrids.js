@@ -10,7 +10,7 @@ this["ChordGrids"]["Templates"]["ControlsView"] = function(data) {var __t, __p =
 
 this["ChordGrids"]["Templates"]["HelpModal"] = function(data) {var __t, __p = '', __e = _.escape;__p += '<div class="helpModal modal fade" id="test_modal">\n  <div class="modal-body">\n    <h1>Welcome to Chord Grids!</h1>\n    <p>Chord Grids is a tool for creating chord/chord melody pages using <a href="http://www.tedgreene.com/images/lessons/students/PaulVachon/HowToReadTedGreeneChordDiagrams.pdf">\n    Ted Greene\'s awesome chord diagram notation</a>. This system is expressive, easy to read, and provides the ability to notate melody in addition to static chords. Simply put, it\'s the best way\n    I\'ve seen to notate chord melody/solo arrangements for guitar.</p>\n    <h4>Editing a Grid</h4>\n    <p>To edit a chord, click on the desired fret/string to cycle through the available shapes (circle, X, square, triangle, none). Click on the number in the upper left to edit the fret. Click on the area above the grid to edit the title.</p>\n    <p>You can zoom in and out by holding the option key and using the scrollwheel on your mouse.</p>\n    <h4>Adding a Grid</h4>\n    <p>Click the plus button after any grid to create a new, empty grid in its place. As you edit the last grid on the page, a new one will automatically be added at the end.</p>\n    <h4>Deleting a Grid</h4>\n    <p>To delete a grid, hover over it and then click the "X" that appears above and to the right,</p>\n    <h4>Saving and Loading Pages</h4>\n    <p>Right now, saving and loading takes a bit of manual effort. To save a page of chord grids, click the save button and copy the text that appears in the pop up. Save this text somewhere you can find it later</p>\n    <p>To load a page: Click the load button. When the popup appears, paste in the text from a previously saved grid, and then click load. Or, click one of the items in the list to load one of the example pages.</p>\n  </div>\n  <div class="modal-footer">\n    <a href="#" class="btn" data-dismiss="modal">Close</a>\n  </div>\n</div>';return __p};
 
-this["ChordGrids"]["Templates"]["LoadModal"] = function(data) {var __t, __p = '', __e = _.escape;__p += '<div class="loadModal modal fade" id="test_modal">\n  <div class="modal-body">\n    <button class="btn btn-large btn-primary loadPopupLoadFileBtn">\n      Load a file from your computer\n    </button>\n    <div class="loadModalOr">\n      <p>or select one of the example pages</p>\n     <!-- <p>OR</p>\n      <p>Select from the list of example pages</p>-->\n    </div>\n    <div class="loadModalExamples">\n      <ul>\n        <li class="loadModalExample" >\n          <a href="#" data=\'[{"n":"D","f":"5","d":"111134143233244332"},{"n":"G","f":"3","d":"101121131312324441451"},{"n":"C","f":"5","d":"132144234311333401424523"},{"n":"F","f":"5","d":"131141151321411"},{"n":"B","f":"5","d":"141151232301321"},{"n":"Bb","f":"3","d":"132141331401521"},{"n":"Bb","f":"3","d":"121142331401"},{"n":"E","d":"221302331341351"},{"n":"E","d":"221331342401"},{"n":"A","d":"221231241501"},{"n":"A","d":"231243333521"},{"n":"D","f":"4","d":"131211341432"},{"n":"A","f":"4","d":"201221331341"}]\'>Ted Greene: Autumn Leaves</a>\n        </li>\n        <li class="loadModalExample" >\n          <a href="#" data=\'{"grids":[{"n":"F m7","f":"8","d":"111131241321"},{"n":"Bb m7","f":"8","d":"121241251331"},{"n":"Eb 9","f":"8","d":"141331401421"},{"n":"Eb 7 b9","f":"8","d":"141231401421"},{"n":"Ab 7","f":"8","d":"131141152321411"},{"n":"Db maj 7","f":"4","d":"111231321341"},{"n":"G 7","f":"3","d":"101121231441552"},{"n":"C maj 7","f":"3","d":"111231321341"},{"n":"C m7","f":"3","d":"111131241321"},{"n":"F m7","f":"3","d":"121241251331"},{"n":"Bb 9","f":"3","d":"141331401421"},{"n":"Bb 7 b9","f":"3","d":"141231401421"},{"n":"Eb maj 7","f":"3","d":"131141321411"},{"n":"Ab maj 7","f":"4","d":"101221231311"},{"n":"A m7","f":"3","d":"142243301321331"},{"n":"D 7","f":"3","d":"141221311331"},{"n":"G maj 7","f":"3","d":"101221231311"},{"n":"G 6/9","f":"2","d":"111121131241"},{"n":"G 6","f":"7","d":"111131241321452"},{"n":"A m7/11","f":"8","d":"141231321351"},{"n":"A m7","f":"7","d":"121232241251331"},{"n":"D 9","f":"4","d":"121211231241"},{"n":"D 7 b9","f":"7","d":"121141231251"},{"n":"G maj 7","f":"5","d":"121331341351"}],"version":1,"title":"ATTYA Chord Melody - Ted Greene"}\'>Ted Greene: ATTYA Chord Melody</a>\n        </li>\n        <li class="loadModalExample" >\n          <a href="#" data=\'{"grids":[{"n":"F maj 7","f":"8","d":"111152231321341"},{"n":"E m7b5","f":"7","d":"111131221242"},{"n":"A7","f":"5","d":"101121231441"},{"n":"D m7","f":"9","d":"201221231241"},{"n":"Db m7 b6","f":"9","d":"101121131241"},{"n":"C m9","f":"8","d":"101121131141152351"},{"n":"B 13","f":"7","d":"101121231242341"},{"n":"Bb 6","f":"5","d":"121201241331"},{"n":"Bb m6","f":"5","d":"121201231241442"},{"n":"F maj 7","f":"8","d":"111231321341"},{"n":"F / A","f":"10","d":"121131311441"},{"n":"D 13","f":"10","d":"101121231341351"},{"n":"D 7 #9 #5","f":"9","d":"111221231251341"},{"n":"G m7","f":"8","d":"121152311331441"},{"n":"C 13","f":"8","d":"101121231341"},{"n":"E 7 #9","f":"11","d":"111221231"},{"n":"A 7","f":"10","d":"111131221441"},{"n":"D 7","f":"9","d":"111131221541"},{"n":"G 7","f":"8","d":"111131221352"},{"n":"C 7 #5","f":"7","d":"111131221341"},{"n":"G m7","f":"8","d":"121311331441"},{"n":"G m7","f":"3","d":"101121131141"},{"n":"C 13","f":"8","d":"101121231341"},{"n":"C 13 / E","f":"7","d":"111131221441"},{"n":"F maj7","f":"5","d":"131241311321"},{"n":"Eb 9","f":"5","d":"121211231241"},{"n":"F maj7","f":"5","d":"131241311321"},{"n":"E m7b5","f":"7","d":"111131221242441"},{"n":"A 7 alt","f":"10","d":"111131221242441"},{"n":"D m","f":"5","d":"111242321331"},{"n":"G m6","f":"2","d":"121201231241251452"},{"n":"D m","f":"5","d":"111243321332"},{"n":"Bb 7","f":"6","d":"101121231311"},{"n":"D m","f":"5","d":"111242321331"},{"n":"G m6","f":"2","d":"121201231241251452"},{"n":"D m7","f":"5","d":"111131152241321451"},{"n":"G 13 b9","f":"7","d":"151211321331341"},{"n":"D m","f":"10","d":"101132321"},{"n":"D m nat7","f":"10","d":"101142221331"},{"n":"D m7","f":"10","d":"101121131152441"},{"n":"B m11","f":"12","d":"121151311331441"},{"n":"E 7","f":"11","d":"111131221541"},{"n":"A 7 #9","f":"10","d":"111131142221441"},{"n":"D 7","f":"9","d":"111131221541"},{"n":"G 9","f":"8","d":"111221231341"},{"n":"C 7","f":"7","d":"111131221241"}],"version":1,"title":"Georgia - Tim Lerch"}\'>Tim Lerch: Georgia on My Mind</a>\n        </li>\n        <li class="loadModalExample">\n          <a class="loadModalExample"href="#" data=\'{"grids":[{"n":"Maj 7 - 1","d":"151241252331422"},{"n":"Maj 7 - 1","d":"132141351441452"},{"n":"Maj 7 - 1","d":"151332341551"},{"n":"Maj 7 - 2","d":"131141151242321451"},{"n":"Maj 7 - 2","d":"122331341442521"},{"n":"Maj 7 - 2","d":"131222431441542"},{"n":"Maj 7 - 3","d":"112231321332511"},{"n":"Maj 7 - 3","d":"121212331421432"},{"n":"Maj 7 - 3","d":"121132311402521"},{"n":"Dom 7 - 1","d":"132141251441452"},{"n":"Dom 7 - 1","d":"151341352431522"},{"n":"Dom 7 - 1","d":"141152231322441"},{"n":"Dom 7 - 2","d":"131222341431542"},{"n":"Dom 7 - 2","d":"122241331442521"},{"n":"Dom 7 - 2","d":"131242321412431"},{"n":"Dom 7 - 3","d":"121212231421432"},{"n":"Dom 7 - 3","d":"112131321332511"},{"n":"Dom 7 - 3","d":"221232411502521"},{"n":"Min 7 - 1","d":"131141152322441"},{"n":"Min 7 - 1","d":"151331341352522"},{"n":"Min 7 - 1","d":"132251431441452"},{"n":"Min 7 - 1","d":"151241332451"},{"n":"Min 7 - 2","d":"131221242412431"},{"n":"Min 7 - 2","d":"122241331421442"},{"n":"Min 7 - 3","d":"221232311502521"},{"n":"Min 7 - 3","d":"111131321332411"},{"n":"Min 7 - 3","d":"121312331521532"},{"n":"Min 7b5 - 1","d":"131152322431441"},{"n":"Min 7b5 - 1","d":"132251341431452"},{"n":"Min 7b5 - 2","d":"221242412431521"},{"n":"Min 7b5 - 2","d":"131321342512531"},{"n":"Min 7b5 - 2","d":"122231241421442"},{"n":"Min 7b5 - 3","d":"121232311502521"},{"n":"Min 7b5 - 3","d":"112131221332411"}],"version":1,"title":"Descending Arps - Upper String Roots"}\'>Descending Arps</a>\n        </li>\n      </ul>\n    </div>\n  </div>\n  <div class="modal-footer">\n    <a href="#" class="btn" data-dismiss="modal">Cancel</a>\n  </div>\n</div>';return __p};
+this["ChordGrids"]["Templates"]["LoadModal"] = function(data) {var __t, __p = '', __e = _.escape;__p += '<div class="loadModal modal fade" id="test_modal">\n  <div class="modal-body">\n    <button class="btn btn-large btn-primary loadPopupLoadFileBtn">\n      Load a file from your computer\n    </button>\n    <div class="loadModalOr">\n      <p>or select one of the example pages</p>\n     <!-- <p>OR</p>\n      <p>Select from the list of example pages</p>-->\n    </div>\n    <div class="loadModalExamples">\n      <ul>\n        <li class="loadModalExample" >\n          <a href="#" data=\'[{"n":"D","f":"5","d":"111134143233244332"},{"n":"G","f":"3","d":"101121131312324441451"},{"n":"C","f":"5","d":"132144234311333401424523"},{"n":"F","f":"5","d":"131141151321411"},{"n":"B","f":"5","d":"141151232301321"},{"n":"Bb","f":"3","d":"132141331401521"},{"n":"Bb","f":"3","d":"121142331401"},{"n":"E","d":"221302331341351"},{"n":"E","d":"221331342401"},{"n":"A","d":"221231241501"},{"n":"A","d":"231243333521"},{"n":"D","f":"4","d":"131211341432"},{"n":"A","f":"4","d":"201221331341"}]\'>Ted Greene: Autumn Leaves</a>\n        </li>\n        <li class="loadModalExample" >\n          <a href="#" data=\'{"grids":[{"n":"F m7","f":"8","d":"111131241321"},{"n":"Bb m7","f":"8","d":"121241251331"},{"n":"Eb 9","f":"8","d":"141331401421"},{"n":"Eb 7 b9","f":"8","d":"141231401421"},{"n":"Ab 7","f":"8","d":"131141152321411"},{"n":"Db maj 7","f":"4","d":"111231321341"},{"n":"G 7","f":"3","d":"101121231441552"},{"n":"C maj 7","f":"3","d":"111231321341"},{"n":"C m7","f":"3","d":"111131241321"},{"n":"F m7","f":"3","d":"121241251331"},{"n":"Bb 9","f":"3","d":"141331401421"},{"n":"Bb 7 b9","f":"3","d":"141231401421"},{"n":"Eb maj 7","f":"3","d":"131141321411"},{"n":"Ab maj 7","f":"4","d":"101221231311"},{"n":"A m7","f":"3","d":"142243301321331"},{"n":"D 7","f":"3","d":"141221311331"},{"n":"G maj 7","f":"3","d":"101221231311"},{"n":"G 6/9","f":"2","d":"111121131241"},{"n":"G 6","f":"7","d":"111131241321452"},{"n":"A m7/11","f":"8","d":"141231321351"},{"n":"A m7","f":"7","d":"121232241251331"},{"n":"D 9","f":"4","d":"121211231241"},{"n":"D 7 b9","f":"7","d":"121141231251"},{"n":"G maj 7","f":"5","d":"121331341351"}],"version":1,"title":"ATTYA Chord Melody - Ted Greene"}\'>Ted Greene: ATTYA Chord Melody</a>\n        </li>\n        <li class="loadModalExample" >\n          <a href="#" data=\'{"grids":[{"n":"F maj 7","f":"8","d":"111152231321341"},{"n":"E m7b5","f":"7","d":"111131221242"},{"n":"A7","f":"5","d":"101121231441"},{"n":"D m7","f":"9","d":"201221231241"},{"n":"Db m7 b6","f":"9","d":"101121131241"},{"n":"C m9","f":"8","d":"101121131141152351"},{"n":"B 13","f":"7","d":"101121231242341"},{"n":"Bb 6","f":"5","d":"121201241331"},{"n":"Bb m6","f":"5","d":"121201231241442"},{"n":"F maj 7","f":"8","d":"111231321341"},{"n":"F / A","f":"10","d":"121131311441"},{"n":"D 13","f":"10","d":"101121231341351"},{"n":"D 7 #9 #5","f":"9","d":"111221231251341"},{"n":"G m7","f":"8","d":"121152311331441"},{"n":"C 13","f":"8","d":"101121231341"},{"n":"E 7 #9","f":"11","d":"111221231"},{"n":"A 7","f":"10","d":"111131221441"},{"n":"D 7","f":"9","d":"111131221541"},{"n":"G 7","f":"8","d":"111131221352"},{"n":"C 7 #5","f":"7","d":"111131221341"},{"n":"G m7","f":"8","d":"121311331441"},{"n":"G m7","f":"3","d":"101121131141"},{"n":"C 13","f":"8","d":"101121231341"},{"n":"C 13 / E","f":"7","d":"111131221441"},{"n":"F maj7","f":"5","d":"131241311321"},{"n":"Eb 9","f":"5","d":"121211231241"},{"n":"F maj7","f":"5","d":"131241311321"},{"n":"E m7b5","f":"7","d":"111131221242441"},{"n":"A 7 alt","f":"10","d":"111131221242441"},{"n":"D m","f":"5","d":"111242321331"},{"n":"G m6","f":"2","d":"121201231241251452"},{"n":"D m","f":"5","d":"111243321332"},{"n":"Bb 7","f":"6","d":"101121231311"},{"n":"D m","f":"5","d":"111242321331"},{"n":"G m6","f":"2","d":"121201231241251452"},{"n":"D m7","f":"5","d":"111131152241321451"},{"n":"G 13 b9","f":"7","d":"151211321331341"},{"n":"D m","f":"10","d":"101132321"},{"n":"D m nat7","f":"10","d":"101142221331"},{"n":"D m7","f":"10","d":"101121131152441"},{"n":"B m11","f":"12","d":"121151311331441"},{"n":"E 7","f":"11","d":"111131221541"},{"n":"A 7 #9","f":"10","d":"111131142221441"},{"n":"D 7","f":"9","d":"111131221541"},{"n":"G 9","f":"8","d":"111221231341"},{"n":"C 7","f":"7","d":"111131221241"}],"version":1,"title":"Georgia - Tim Lerch"}\'>Tim Lerch: Georgia on My Mind</a>\n        </li>\n        <li class="loadModalExample">\n          <a href="#" data=\'{"grids":[{"n":"Maj 7 - 1","d":"151241252331422"},{"n":"Maj 7 - 1","d":"132141351441452"},{"n":"Maj 7 - 1","d":"151332341551"},{"n":"Maj 7 - 2","d":"131141151242321451"},{"n":"Maj 7 - 2","d":"122331341442521"},{"n":"Maj 7 - 2","d":"131222431441542"},{"n":"Maj 7 - 3","d":"112231321332511"},{"n":"Maj 7 - 3","d":"121212331421432"},{"n":"Maj 7 - 3","d":"121132311402521"},{"n":"Dom 7 - 1","d":"132141251441452"},{"n":"Dom 7 - 1","d":"151341352431522"},{"n":"Dom 7 - 1","d":"141152231322441"},{"n":"Dom 7 - 2","d":"131222341431542"},{"n":"Dom 7 - 2","d":"122241331442521"},{"n":"Dom 7 - 2","d":"131242321412431"},{"n":"Dom 7 - 3","d":"121212231421432"},{"n":"Dom 7 - 3","d":"112131321332511"},{"n":"Dom 7 - 3","d":"221232411502521"},{"n":"Min 7 - 1","d":"131141152322441"},{"n":"Min 7 - 1","d":"151331341352522"},{"n":"Min 7 - 1","d":"132251431441452"},{"n":"Min 7 - 1","d":"151241332451"},{"n":"Min 7 - 2","d":"131221242412431"},{"n":"Min 7 - 2","d":"122241331421442"},{"n":"Min 7 - 3","d":"221232311502521"},{"n":"Min 7 - 3","d":"111131321332411"},{"n":"Min 7 - 3","d":"121312331521532"},{"n":"Min 7b5 - 1","d":"131152322431441"},{"n":"Min 7b5 - 1","d":"132251341431452"},{"n":"Min 7b5 - 2","d":"221242412431521"},{"n":"Min 7b5 - 2","d":"131321342512531"},{"n":"Min 7b5 - 2","d":"122231241421442"},{"n":"Min 7b5 - 3","d":"121232311502521"},{"n":"Min 7b5 - 3","d":"112131221332411"}],"version":1,"title":"Descending Arps - Upper String Roots"}\'>Descending Arps</a>\n        </li>\n        <li class="loadModalExample">\n          <a href="#" data=\'{"grids":[{"n":"F","f":"8","d":"11F"},{"n":"G","f":"10","d":"11E"}],"version":2,"title":"Repeated Notes"}\'>Repeated Notes</a>\n        </li>\n      </ul>\n    </div>\n  </div>\n  <div class="modal-footer">\n    <a href="#" class="btn" data-dismiss="modal">Cancel</a>\n  </div>\n</div>';return __p};
 
 this["ChordGrids"]["Templates"]["MainLayout"] = function(data) {var __t, __p = '', __e = _.escape;__p += '<div id="mainRegion">\n</div>';return __p};
 
@@ -54,16 +54,10 @@ app.App.addInitializer(function() {
     });
 
     function newPage() {
-        var arr = [ 
-            new app.ChordGrid({ 
-                "name": "G Maj",
-                "fret": 7,
-                "data": [[0,0,0,0,0,0],[0,0,0,1,0,1],[0,0,0,0,1,0],[0,0,1,0,0,0],[0,1,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]
-            }),
+        var arr = [
             new app.ChordGrid({ 
                 "name": "",
                 "fret": 1,
-                "data": [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]
             })
         ];
         page.get('grids').set(arr);
@@ -168,6 +162,38 @@ app.App.addInitializer(function() {
         $('.popupOverlay').remove();
         $('.popupContainer').remove();
     }
+
+    for (var i = 0; i < app.Symbol.Count; ++i) {
+        var svg = app.common.makeSVG('svg');
+        svg.appendChild(app.common.createSymbol(i, [10, 10], 8));
+        var content = $('<div/>')
+                .addClass('symbolDropdownEntry')
+                .append(svg)
+                .append($('<span> (' + i + ') </span>'));
+        $('.nav .dropdown-menu').append($('<li/>').append($('<a href="#"/>').append(content)));
+    }
+
+    $('.nav .dropdown-menu li a').on('click', function(e) {
+        var idx = $(this).parent().index();
+        var svg = app.common.makeSVG('svg');
+        svg.appendChild(app.common.createSymbol(idx, [10, 10], 8));
+        var content = $('<div/>')
+                .addClass('symbolDropdownEntry')
+                .append('<span>Current: </span>')
+                .append(svg);
+        $('.nav .dropdown-toggle span').html(content);
+        app.currentSymbol = idx;
+        console.log('current symbol: ' + app.currentSymbol);
+    })
+
+    $($('.nav .dropdown-menu').children()[0]).find('a').trigger('click');
+});
+
+app.currentSymbol = 0;
+$(document).on('keypress', function(e) {
+    if (e.keyCode >= 49 && e.keyCode <= 52) {
+        $($('.nav .dropdown-menu').children()[e.keyCode - 49]).find('a').trigger('click');
+    }
 });
 })();
 (function() {
@@ -179,16 +205,89 @@ app.common.makeSVG = function(tag, attrs) {
         el.setAttribute(k, attrs[k]);
     return el;
 };
+
+app.common.createSymbol = function(symbolType, c, r) {
+    switch(symbolType) {
+        case app.Symbol.Circle:
+            return app.common.makeSVG('circle', {
+                cx: c[0],
+                cy: c[1],
+                r: r,
+                fill: 'rgb(0, 0, 0)'
+            });
+        case app.Symbol.X: {
+            var l1 = app.common.makeSVG('line', {
+                x1: c[0] - r,
+                x2: c[0] + r,
+                y1: c[1] - r,
+                y2: c[1] + r,
+                stroke: 'rgb(0, 0, 0)',
+                'stroke-width': 4
+            });
+            var l2 = app.common.makeSVG('line', {
+                x1: c[0] - r,
+                x2: c[0] + r,
+                y1: c[1] + r,
+                y2: c[1] - r,
+                stroke: 'rgb(0, 0, 0)',
+                'stroke-width': 4
+            });
+            var x = app.common.makeSVG('g');
+            x.appendChild(l1);
+            x.appendChild(l2);
+            return x;
+        }
+        case app.Symbol.Square:
+            return app.common.makeSVG('rect', {
+                width: 2 * r,
+                height: 2 * r,
+                x: c[0] - r,
+                y: c[1] - r,
+                fill: 'transparent',
+                stroke: 'rgb(0, 0, 0)',
+                'stroke-width': 4
+            });
+        case app.Symbol.Triangle: {
+            var points = [ c[0] - r, c[1] + r,
+                           c[0], c[1] - r,
+                           c[0] + r, c[1] + r,
+                           c[0] - r, c[1] + r,
+                           c[0], c[1] - r ].toString();
+            return app.common.makeSVG('polyline', {
+                points: points,
+                fill: 'none',
+                stroke: 'rgb(0, 0, 0)',
+                'stroke-width': 4
+            });
+        }
+    }
+}
 })();
 (function() {
 var app = window.ChordGrids = (window.ChordGrids || {});
 
 app.Symbol = {
-    None: 0,
-    Circle: 1,
-    X: 2,
-    Square: 3,
-    Triangle: 4
+    Circle: 0,
+    X: 1,
+    Square: 2,
+    Triangle: 3,
+    Count: 4
+}
+
+function encodeDatum(datum) {
+    var num = 0;
+    for (var i = app.Symbol.Circle; i < app.Symbol.Count; ++i)
+        num |= (datum[i] << i);
+    return '0123456789ABCDEF'[num];
+}
+
+function decodeDatum(symbol) {
+    var datum = { };
+    var num = '0123456789ABCDEF'.indexOf(symbol);
+    for (var i = app.Symbol.Circle; i < app.Symbol.Count; ++i)
+        if (num & (1 << i))
+            datum[i] = 1;
+    return datum;
 }
 
 app.ChordGrid = Backbone.Model.extend({
@@ -197,15 +296,23 @@ app.ChordGrid = Backbone.Model.extend({
             name: '',
             fret: 1,
             data: [
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0]
+                [{ }, { }, { }, { }, { }, { }],
+                [{ }, { }, { }, { }, { }, { }],
+                [{ }, { }, { }, { }, { }, { }],
+                [{ }, { }, { }, { }, { }, { }],
+                [{ }, { }, { }, { }, { }, { }],
+                [{ }, { }, { }, { }, { }, { }],
+                [{ }, { }, { }, { }, { }, { }]
             ]
         };
+    },
+
+    hasSymbol: function(fret, string) {
+        var datum = this.get('data')[fret][string];
+        return datum[app.Symbol.Circle] ||
+               datum[app.Symbol.X] ||
+               datum[app.Symbol.Square] ||
+               datum[app.Symbol.Triangle];
     },
 
     encode: function() {
@@ -220,8 +327,8 @@ app.ChordGrid = Backbone.Model.extend({
         ret.d = '';
         for (var fret = 0; fret < 6; ++fret) {
             for (var string = 0; string < 6; ++string) {
-                if (data[fret][string] != 0)
-                    ret.d += fret + '' + string + '' + data[fret][string];
+                if (this.hasSymbol(fret, string))
+                    ret.d += fret + '' + string + '' + encodeDatum(data[fret][string]);
             }
         }
         if (ret.d == '')
@@ -240,8 +347,28 @@ app.ChordGrid = Backbone.Model.extend({
             var s = d.substr(0, 3);
             var fret = d[0] - '0';
             var string = d[1] - '0';
-            var val = d[2] - '0';
-            data[fret][string] = val;
+            var val = d[2];
+            data[fret][string] = decodeDatum(val);
+            d = d.substr(3);
+        }
+        this.set('data', data);
+        return this;
+    },
+
+    decodeOld: function(encoded) {
+        this.set('name', encoded.n || '');
+        this.set('fret', encoded.f || 1);
+        var data = this.defaults().data;
+        var d = encoded.d;
+        while(d && d.length >= 3) {
+            var s = d.substr(0, 3);
+            var fret = d[0] - '0';
+            var string = d[1] - '0';
+            var val = d[2] - '0' - 1;
+            var datum = { };
+            if (val >= 0)
+            datum[val] = 1;
+            data[fret][string] = datum;
             d = d.substr(3);
         }
         this.set('data', data);
@@ -282,7 +409,7 @@ app.ChordGridCollection = Backbone.Collection.extend({
 (function() {
 var app = window.ChordGrids = (window.ChordGrids || {});
 
-var fileVersion = 1;
+var fileVersion = 2;
 
 app.ChordGridPage = Backbone.Model.extend({
     defaults: function() {
@@ -314,11 +441,22 @@ app.ChordGridPage = Backbone.Model.extend({
 
     loadVersioned: function(json, version) {
         switch (version) {
-            case 1: {
+            case 2:
                 var m = [ ];
                 for (var i = 0; i < json.grids.length; ++i) {
                     var data = json.grids[i];
                     var model = new app.ChordGrid().decode(data);
+                    m.push(model);
+                }
+                m.push(new app.ChordGrid());
+                this.set('title', json.title || '');
+                this.get('grids').set(m);
+                break;
+            case 1: {
+                var m = [ ];
+                for (var i = 0; i < json.grids.length; ++i) {
+                    var data = json.grids[i];
+                    var model = new app.ChordGrid().decodeOld(data);
                     m.push(model);
                 }
                 m.push(new app.ChordGrid());
@@ -333,7 +471,7 @@ app.ChordGridPage = Backbone.Model.extend({
                 var m = [ ];
                 for (var i = 0; i < json.length; ++i) {
                     var data = json[i];
-                    var model = new app.ChordGrid().decode(data);
+                    var model = new app.ChordGrid().decodeOld(data);
                     m.push(model);
                 }
                 m.push(new app.ChordGrid());
@@ -379,20 +517,25 @@ app.playback = {
 		var data = chordGrid.get('data');
 		var capo = chordGrid.get('fret') - 1;
 
-		var maxSymbol = 0;
+		var maxSymbol = -1;
 		for (var string = 0; string < 6; ++string)
 			for (var fret = 0; fret < 6; ++fret)
-				if (data[fret][string] > maxSymbol)
-					maxSymbol = data[fret][string];
-		var mult = 1 / maxSymbol;
+				for (var sym = maxSymbol + 1; sym < app.Symbol.Count; ++sym)
+					if (data[fret][string][sym])
+						maxSymbol = sym;
+		var mult = 1 / (maxSymbol + 1);
+
+		console.log('maxSymbol = ' + maxSymbol);
 
 		for (var string = 0; string < 6; ++string) {
 			for (var fret = 0; fret < 6; ++fret) {
-				if (data[fret][string]) {
-					var note = this._getNote(capo + fret, string);
-					MIDI.setVolume(string, 127);
-					MIDI.noteOn(string, note, 127, mult * (data[fret][string] - 1));
-					MIDI.noteOff(string, note, .9);
+				for (var sym = app.Symbol.Circle; sym < app.Symbol.Count; ++sym) {
+					if (data[fret][string][sym]) {
+						var note = this._getNote(capo + fret, string);
+						MIDI.setVolume(string, 127);
+						MIDI.noteOn(string, note, 127, mult * (sym));
+						MIDI.noteOff(string, note, .9);
+					}
 				}
 			}
 		}
@@ -600,6 +743,7 @@ app.ChordGridView = Marionette.ItemView.extend({
         'click .insertBtn': '_onInsertBtnClick'
     },
     model: app.ChordGrid,
+    modifiers: [ false, false, false ],
 
     initialize: function(params) {
         this.numFrets = 6;
@@ -693,7 +837,7 @@ app.ChordGridView = Marionette.ItemView.extend({
         var data = this.model.get('data');
         for (var fret = 0; fret < this.numFrets + 1; ++fret) {
             for (var string = 0; string < 6; ++string) {
-                if (data[fret][string])
+                if (this.model.hasSymbol(fret, string))
                     this.setSymbol(fret, string, data[fret][string]);
             }
         }
@@ -714,69 +858,21 @@ app.ChordGridView = Marionette.ItemView.extend({
         this.$el.removeClass('unedited');
     },
 
-    _createSymbol: function(type, c) {
-        switch (type) {
-            case app.Symbol.None: default:
-                return null;
-            case 1: {
-                var dot = app.common.makeSVG('circle', {
-                    cx: c[0],
-                    cy: c[1],
-                    r: this.fretSpacing / 3,
-                    fill: 'rgb(0, 0, 0)'
-                });
-                return dot;
-            }
-            case 2: {
-                var r = this.fretSpacing * (15 / 60);
-                var l1 = app.common.makeSVG('line', {
-                    x1: c[0] - this.symbolR,
-                    x2: c[0] + this.symbolR,
-                    y1: c[1] - this.symbolR,
-                    y2: c[1] + this.symbolR,
-                    stroke: 'rgb(0, 0, 0)',
-                    'stroke-width': this.fretSpacing / 8
-                });
-                var l2 = app.common.makeSVG('line', {
-                    x1: c[0] - this.symbolR,
-                    x2: c[0] + this.symbolR,
-                    y1: c[1] + this.symbolR,
-                    y2: c[1] - this.symbolR,
-                    stroke: 'rgb(0, 0, 0)',
-                    'stroke-width': this.fretSpacing / 8
-                });
-                var x = app.common.makeSVG('g');
-                x.appendChild(l1);
-                x.appendChild(l2);
-                return x;
-            }
-            case 3: {
-                var rect = app.common.makeSVG('rect', {
-                    width: 2 * this.symbolR,
-                    height: 2 * this.symbolR,
-                    x: c[0] - this.symbolR,
-                    y: c[1] - this.symbolR,
-                    fill: 'transparent',
-                    stroke: 'rgb(0, 0, 0)',
-                    'stroke-width': this.fretSpacing / 8
-                });
-                return rect;
-            }
-            case 4: {
-                var points = [ c[0] - this.symbolR, c[1] + this.symbolR,
-                               c[0], c[1] - this.symbolR,
-                               c[0] + this.symbolR, c[1] + this.symbolR,
-                               c[0] - this.symbolR, c[1] + this.symbolR,
-                               c[0], c[1] - this.symbolR ].toString();
-                var tri = app.common.makeSVG('polyline', {
-                    points: points,
-                    fill: 'none',
-                    stroke: 'rgb(0, 0, 0)',
-                    'stroke-width': this.fretSpacing / 8
-                });
-                return tri;
-            }
+    _createSymbol: function(symbolData, c) {
+        var g = app.common.makeSVG('g');
+        if (symbolData[app.Symbol.Circle]) {
+            g.appendChild(app.common.createSymbol(app.Symbol.Circle, c, this.symbolR * 0.9));
         }
+        if (symbolData[app.Symbol.X]) {
+            g.appendChild(app.common.createSymbol(app.Symbol.X, c, this.symbolR * 1.2));
+        }
+        if (symbolData[app.Symbol.Square]) {
+            g.appendChild(app.common.createSymbol(app.Symbol.Square, c, this.symbolR * 1.2))
+        }
+        if (symbolData[app.Symbol.Triangle]) {
+            g.appendChild(app.common.createSymbol(app.Symbol.Triangle, c, this.symbolR * 1.2));
+        }
+        return g;
     },
 
     _onClick: function(e) {
@@ -795,8 +891,14 @@ app.ChordGridView = Marionette.ItemView.extend({
             }
         }
 
-        var symbol = (this.model.get('data')[fret][string] + 1 + 5) % 5;
-        this.setSymbol(fret, string, symbol);
+        var symbolData = (this.model.get('data')[fret][string]);
+        var symbol = app.currentSymbol;
+        if (!symbolData[symbol])
+            symbolData[symbol] = 1;
+        else
+            delete symbolData[symbol];
+
+        this.setSymbol(fret, string, symbolData);
         this.trigger('edited');
         this.$el.removeClass('unedited');
         return false;
