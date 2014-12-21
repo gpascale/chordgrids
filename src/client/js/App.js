@@ -1,6 +1,8 @@
 
 var app = window.ChordGrids = (window.ChordGrids || {});
 
+app.firebase = new Firebase("https://chordgrids.firebaseio.com");
+
 app.App = new Marionette.Application();
 
 app.MainLayout = Marionette.Layout.extend({
@@ -147,22 +149,22 @@ app.App.addInitializer(function() {
     for (var i = 0; i < app.Symbol.Count; ++i) {
         var svg = app.common.makeSVG('svg');
         svg.appendChild(app.common.createSymbol(i, [10, 10], 8));
+        svg.setAttribute('width', '20px');
+        svg.setAttribute('height', '20px');
         var content = $('<div/>')
                 .addClass('symbolDropdownEntry')
                 .append(svg)
                 .append($('<span> (' + i + ') </span>'));
-        $('.nav .dropdown-menu').append($('<li/>').append($('<a href="#"/>').append(content)));
+        $('.symbolDropdown .dropdown-menu').append($('<li/>').append($('<a href="#"/>').append(content)));
     }
 
     $('.nav .dropdown-menu li a').on('click', function(e) {
         var idx = $(this).parent().index();
         var svg = app.common.makeSVG('svg');
         svg.appendChild(app.common.createSymbol(idx, [10, 10], 8));
-        var content = $('<div/>')
-                .addClass('symbolDropdownEntry')
-                .append('<span>Current: </span>')
-                .append(svg);
-        $('.nav .dropdown-toggle span').html(content);
+        svg.setAttribute('width', '20px');
+        svg.setAttribute('height', '20px');
+        $('.nav .dropdown-toggle .svgContainer').html(svg);
         app.currentSymbol = idx;
         console.log('current symbol: ' + app.currentSymbol);
     })

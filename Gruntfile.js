@@ -21,7 +21,7 @@ module.exports = function(grunt) {
  			   expand: true,
  			   cwd: lessRoot,
  			   src: [lessPattern],
- 			   dest: 'public/css',
+ 			   dest: 'public/intermediates/css',
  			   ext: '.css'
  		    }],
  	    },
@@ -29,6 +29,23 @@ module.exports = function(grunt) {
  		    cleancss: true
  	    }
     });
+
+    /*************************************************************************/
+    // Compile React
+    /*************************************************************************/
+    grunt.loadNpmTasks('grunt-react');
+    grunt.config('react', {
+        dynamic_mappings: {
+            files: [ {
+                expand: true,
+                flatten: true,
+                cwd: 'src/client/js',
+                src: ['**/*.{js,jsx}'],
+                dest: 'public/intermediates/js',
+                ext: '.js'
+            } ]
+        }
+    });
 
     /*************************************************************************/
     // Js / Html / External client stuff
@@ -81,17 +98,20 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.config('concat', {
         extless: {
-            src: 'src/client/ext/bootstrap/css/bootstrap.min.css',
+            src: ['src/client/ext/css/bootstrap.min.css',
+                  'src/client/ext/css/bootstrap-theme.min.css'],
             dest: 'public/css/deps.css'
         },
         less: {
-            src: 'public/css/*.css',
+            src: 'public/intermediates/css/*.css',
             dest: 'public/css/chordgrids.css'
         },
         extjs: {
             src: [ 'public/ext/js/jquery.min-1.10.2.js',
                    'public/ext/js/jquery.mousewheel.min.js',
-                   'public/ext/bootstrap/js/bootstrap.min.js',
+                   'public/ext/js/bootstrap.min.js',
+                   'public/ext/js/react.0.12.2.min.js',
+                   'public/ext/js/firebase.js',
                    'public/ext/js/underscore-min-1.5.1.js',
                    'public/ext/js/backbone-min.js',
                    'public/ext/js/backbone.marionette.min.js',
@@ -101,7 +121,7 @@ module.exports = function(grunt) {
             dest: 'public/js/deps.js'
         },
         js: {
-            src: ['public/js/templates.js', 'src/client/js/**/*.js'],
+            src: ['public/js/templates.js', 'public/intermediates/js/**/*.js'],
             dest: 'public/js/chordgrids.js',
             options: {
                 banner: ';(function() {\n',
@@ -168,5 +188,5 @@ module.exports = function(grunt) {
         src: ['**']
     });
 
-    grunt.registerTask('default', [ 'clean', 'less', 'copy', 'jst', 'concat' ]);
+    grunt.registerTask('default', [ 'clean', 'less', 'react', 'copy', 'jst', 'concat' ]);
 };
