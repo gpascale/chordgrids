@@ -1,180 +1,61 @@
-
 var app = window.ChordGrids = (window.ChordGrids || {});
-
-app.firebase = new Firebase("https://chordgrids.firebaseio.com");
 
 app.App = new Marionette.Application();
 
-app.MainLayout = Marionette.Layout.extend({
-    template: app.Templates.MainLayout,
-    className: 'MainLayout',
-    regions: {
-        main: '#mainRegion'
-    }
+var MyRouter = Backbone.Marionette.AppRouter.extend({
+    /* standard routes can be mixed with appRoutes/Controllers above */
+    routes : {
+        "": "home",
+        "home": "home",
+        "profile" : "user"
+    },
+    _currentLayout: null,
+
+    home: function() {
+        this._currentLayout && this._currentLayout.close();
+        this._currentLayout = new app.PageLayout();
+        this._currentLayout.render();
+    },
+
+    user: function() {
+        this._currentLayout && this._currentLayout.close();
+        this._currentLayout = new app.ProfileLayout();
+        this._currentLayout.render();
+    },
+
+    fourOhFour: function() {
+        console.log("404");
+    },
 });
 
 app.App.addInitializer(function() {
-    this.addRegions({ mainRegion: '#content' });
-    var layout = new app.MainLayout();
-    this.mainRegion.show(layout);
+    app.firebase = new Firebase("https://chordgrids.firebaseio.com");
+    app.auth.init();
 
-    // Basic layout - TODO move this into a region or some shit
-    var page = new app.ChordGridPage();
-    var pageView = new app.ChordGridPageView({ model: page });
-    layout.main.show(pageView);
+    var router = new MyRouter();
 
-    // Start off with a new page
-    newPage();
+    // Start the router. Show the 404 page if no route is matched
+    if (!Backbone.history.start({ pushState: true }))
+        router.navigate('404', { trigger: true, replace: true });
 
-    // Zooming
-    $('body').mousewheel(function(e, delta) {
-        if (e.metaKey) {
-            var delta = 1.0 + delta / 100;
-            var focalPoint = { x: e.clientX, y: e.clientY };
-            pageView.doZoom(delta, focalPoint);
-            return false;
-        }
-    });
-
-    function newPage() {
-        var arr = [
-            new app.ChordGrid({ 
-                "name": "",
-                "fret": 1,
-            })
-        ];
-        page.get('grids').set(arr);
-    }
-
-    function loadPage() {
-        var loadModal = app.Templates.LoadModal();
-        var popup = $(loadModal);
-        popup.modal('show');
-        popup.on('click', '.loadPopupLoadFileBtn', function() {
-            var $hiddenFileInput = $('#fileUploadInput');
-            $hiddenFileInput.on('change', function() {
-                var reader = new FileReader();
-                reader.onload = function() {
-                    doLoad(reader.result);
-                    // TODO: handle failure
-                };
-                reader.readAsText(this.files[0]);
+    // Make links work with single-page navigation (https://gist.github.com/tbranyen/1142129)
+    if (Backbone.history && Backbone.history._hasPushState) {
+        $(document).on("click", "a", function(evt) {
+            var href = $(this).attr("href");
+            if (!href || href == '#')
+                return true;
+            
+            // If the URL is relative (does not include a protocol), handle it with the router.
+            // Otherwise let it go.
+            var protocol = this.protocol + "//";
+            if (href.slice(0, protocol.length) !== protocol) {
+                evt.preventDefault();
+                router.navigate(href, true);
                 return false;
-            });
-            $hiddenFileInput.click();
+            }
+            return true;
         });
-        popup.on('click', '.loadModalExample a', function() {
-            doLoad($(this).attr('data'));
-            return false;
-        })
-        function doLoad(str) {
-            pageView.load(str);
-            popup.modal('hide');
-        }
     }
-
-    function savePage() {
-        var str = page.save();
-        console.log(str);
-
-        var a = document.createElement('a');
-        var title = page.get('title') || '';
-        title = title.replace(/\/\\/g, '_');
-        a.setAttribute('download', title + '.cgpage');
-        a.href = "data:text/plain;charset=utf-8;base64," + window.btoa(str);
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    }
-
-    $('.newBtn').click(function() {
-        newPage();
-    });
-    $('.loadBtn').click(function() {
-        loadPage();
-    });
-    $('.saveBtn').click(function() {
-        savePage();
-    });
-    $('.helpBtn').click(function() {
-        var helpModal = app.Templates.HelpModal();
-        $(helpModal).modal('show');
-        $(helpModal, '.btn').click(function() {
-            $(helpModal).modal('hide');
-        })
-    });
-    $('.playBtn').click(function() {
-        var $this = $(this);
-        if ($(this).hasClass('disabled'))
-            return;
-        if ($this.hasClass('playBtn')) {
-            $this.addClass('disabled');
-            app.playback.initialize(function() {
-                pageView.play();
-                $this.removeClass('disabled');
-            });
-        }
-        else {
-            pageView.stop();
-        }
-    });
-
-    pageView.on('playbackStarted', function() {
-        $('.playBtn').removeClass('playBtn').addClass('stopBtn').text('Stop');
-    });
-    pageView.on('playbackStopped', function() {
-        $('.stopBtn').removeClass('stopBtn').addClass('playBtn').text('Play');
-    });
-
-    $('.modal').on('keypress', function(e) {
-        console.log(e.keyCode);
-    });
-
-    $('body').on('click', '.popupContainer', function() {
-        closePopup();
-    });
-    $('body').on('click', '.popup', function() {
-        return false;
-    })
-    $('body').on('click', '.loadDiv a', function() {
-        $('.loadDiv').find('input').val($(this).attr('data'));
-    });
-    
-    function closePopup() {
-        $('.popupOverlay').remove();
-        $('.popupContainer').remove();
-    }
-
-    for (var i = 0; i < app.Symbol.Count; ++i) {
-        var svg = app.common.makeSVG('svg');
-        svg.appendChild(app.common.createSymbol(i, [10, 10], 8));
-        svg.setAttribute('width', '20px');
-        svg.setAttribute('height', '20px');
-        var content = $('<div/>')
-                .addClass('symbolDropdownEntry')
-                .append(svg)
-                .append($('<span> (' + i + ') </span>'));
-        $('.symbolDropdown .dropdown-menu').append($('<li/>').append($('<a href="#"/>').append(content)));
-    }
-
-    $('.nav .dropdown-menu li a').on('click', function(e) {
-        var idx = $(this).parent().index();
-        var svg = app.common.makeSVG('svg');
-        svg.appendChild(app.common.createSymbol(idx, [10, 10], 8));
-        svg.setAttribute('width', '20px');
-        svg.setAttribute('height', '20px');
-        $('.nav .dropdown-toggle .svgContainer').html(svg);
-        app.currentSymbol = idx;
-        console.log('current symbol: ' + app.currentSymbol);
-    })
-
-    $($('.nav .dropdown-menu').children()[0]).find('a').trigger('click');
 });
 
 app.currentSymbol = 0;
-$(document).on('keypress', function(e) {
-    if (e.keyCode >= 49 && e.keyCode <= 52) {
-        $($('.nav .dropdown-menu').children()[e.keyCode - 49]).find('a').trigger('click');
-    }
-});

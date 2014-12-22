@@ -32,9 +32,9 @@ ChordGrids.LoginButton = React.createClass({
                         <span className="caret"></span>
                     </a>
                     <ul className="dropdown-menu">
-                        <li><a href="#">My Pages</a></li>
-                        <li><a href="#">My Profile</a></li>
-                        <li><a href="#" onClick={this.handleLogout}>Log Out</a></li>
+                        <li><a href="">My Pages</a></li>
+                        <li><a href="profile">My Profile</a></li>
+                        <li><a href="" onClick={this.handleLogout}>Log Out</a></li>
                     </ul>
                 </li>
             );
@@ -51,7 +51,6 @@ ChordGrids.LoginButton = React.createClass({
     },
 
     handleLogout: function() {
-        debugger;
         ChordGrids.firebase.unauth();
     }
 

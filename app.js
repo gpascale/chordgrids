@@ -3,7 +3,7 @@ var app = express();
 app.use(express.logger());
 var fs = require('fs');
 
-app.get(['/', '/index.html'], function(req, res) {
+app.get(['/', '/index.html', '/profile', '/home', '/404'], function(req, res) {
 	fs.readFile(__dirname + '/public/index.html', 'utf8', function(err, text){
         res.send(text);
     });

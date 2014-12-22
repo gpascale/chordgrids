@@ -8,38 +8,8 @@
     <script src="js/deps.js"></script>
     <script src="js/chordgrids.js"></script>
 	</head>
-
     <body>
-        <!-- TODO - make this all a Marionette region/layout/whatever -->
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Chord Grids!</a>
-                </div>
-                <ul class="nav navbar-nav navbar-main">
-                    <li><a href="#" class="newBtn">New</a></li>
-                    <li><a href="#" class="saveBtn">Save</a></li>
-                    <li><a href="#" class="loadBtn">Load</a></li>
-                    <li><a href="#" class="playBtn">Play</a></li>
-                    <li class="dropdown symbolDropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span>Current: </span>
-                        <span class="svgContainer"></span>
-                        <span class="caret"></span>
-                      </a>
-                      <ul class="dropdown-menu">
-                      </ul>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                </ul>
-            </div>
-        </nav>
-        <div id="content">
-        </div>
-        <input type="file" id="fileUploadInput" accept="cgpage" style="display:none">
 	</body>
-
     <script>
         $(document).ready(function() {
             window.ChordGrids.App.start();

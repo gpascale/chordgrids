@@ -4,28 +4,13 @@ var _userData = null;
 var _pageInitialized = false;
 var _loginButton = null;
 
-$(document).ready(function() {
-    _pageInitialized = true;
-    synchronizeAuthState();
-    _loginButton = React.renderComponent(
-        <app.LoginButton userData={_userData} />,
-        $('.navbar-right')[0]
-    );
+app.Auth = Backbone.Model.extend({
+    userData: null,
+    init: function() {
+        app.firebase.onAuth(function(authData) {
+            app.auth.userData = authData;
+            app.auth.trigger('authChanged', authData);
+        });
+    }
 });
-
-function synchronizeAuthState() {
-    if (_loginButton)
-        _loginButton.setState({ userData: _userData });
-}
-
-app.firebase.onAuth(function(authData) {
-    _userData = authData;
-    if (_pageInitialized)
-        synchronizeAuthState();
-});
-
-function name(userData) {
-    if (userData.facebook)
-        return userData.facebook.displayName;
-    return "SoAndSo";
-}
+app.auth = new app.Auth();
