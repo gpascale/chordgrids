@@ -5,7 +5,6 @@ app.Symbol = {
     X: 1,
     Square: 2,
     Triangle: 3,
-    Count: 4
 }
 
 function encodeDatum(datum) {

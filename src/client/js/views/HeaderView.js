@@ -5,17 +5,23 @@ app.HeaderView = Marionette.ItemView.extend({
     el: '.navbar',
 
     initialize: function() {
-        for (var i = 0; i < app.Symbol.Count; ++i) {
+        
+    },
+
+    onRender: function() {
+        var self = this;
+        _.each(app.Symbol, function(i, symbolName) {
             var svg = app.common.makeSVG('svg');
-            svg.appendChild(app.common.createSymbol(i, [10, 10], 8));
+            var symbol = app.common.createSymbol(i, [10, 10], 8);
+            svg.appendChild(symbol);
             svg.setAttribute('width', '20px');
             svg.setAttribute('height', '20px');
             var content = $('<div/>')
                     .addClass('symbolDropdownEntry')
                     .append(svg)
                     .append($('<span> (' + i + ') </span>'));
-            this.$('.symbolDropdown .dropdown-menu').append($('<li/>').append($('<a href="#"/>').append(content)));
-        }
+            self.$('.symbolDropdown .dropdown-menu').append($('<li/>').append($('<a href="#"/>').append(content)));
+        });
 
         this.$('.nav .dropdown-menu li a').on('click', function(e) {
             var idx = $(this).parent().index();
@@ -29,9 +35,7 @@ app.HeaderView = Marionette.ItemView.extend({
         })
 
         this.$($('.nav .dropdown-menu').children()[0]).find('a').trigger('click');
-    },
 
-    onRender: function() {
         var loginButton = React.renderComponent(
             <app.LoginButton userData={app.auth.userData}/>,
             this.$('.navbar-right')[0]

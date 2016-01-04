@@ -1,7 +1,7 @@
 var app = window.ChordGrids = (window.ChordGrids || {});
 
 app.ControlsView = Marionette.ItemView.extend({
-    template: '#ControlsViewTemplate',
+    template: app.Templates.ControlsView,
     className: 'controlsView',
     events: {
         'click .btn.zoomIn': '_doZoom',
@@ -9,7 +9,7 @@ app.ControlsView = Marionette.ItemView.extend({
     },
 
     onRender: function() {
-        this.$el.css({ top: window.innerHeight - 100 });
+        //this.$el.css({ top: window.innerHeight - 100 });
     },
 
     _doZoom: function(e) {

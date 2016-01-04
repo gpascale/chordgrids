@@ -29,6 +29,14 @@ app.PageLayout = Marionette.Layout.extend({
         this.contentRegion.show(this._pageView.render());
         var arr = [ new app.ChordGrid({ "name": "", "fret": 1 }) ];
         this._page.get('grids').set(arr);
+
+        this._controlsView = new app.ControlsView();
+        this.contentRegion.$el.append(this._controlsView.render().$el);
+        var self = this;
+        this._controlsView.on('zoom', function(delta) {
+            self._pageView.doZoom(delta);
+        });
+
         this.otherCrap();
     },
 
